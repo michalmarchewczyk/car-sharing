@@ -28,6 +28,8 @@ services:
       - ./:/var/www/html/
     ports:
       - "8080:80"
+    networks:
+      - default
     links:
       - db
   phpmyadmin:

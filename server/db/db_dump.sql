@@ -67,8 +67,9 @@ CREATE TABLE `users` (
   `id` int NOT NULL,
   `first_name` varchar(30) NOT NULL,
   `last_name` varchar(60) NOT NULL,
-  `type` enum('ADMIN','MODERATOR','CUSTOMER') NOT NULL DEFAULT 'CUSTOMER',
-  `email` varchar(120) NOT NULL
+  `type` enum('ADMIN','MODERATOR','CUSTOMER','BANNED') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'CUSTOMER',
+  `email` varchar(120) NOT NULL,
+  `password` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -81,7 +82,8 @@ ALTER TABLE `reservations`
   ADD KEY `car_id` (`user_id`);
 
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
 
 
 ALTER TABLE `cars`
