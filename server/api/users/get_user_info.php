@@ -1,4 +1,5 @@
 <?php
+include('../headers.php');
 
 $user_id = require 'get_user_id.php';
 

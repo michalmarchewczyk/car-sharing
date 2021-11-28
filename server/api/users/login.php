@@ -1,4 +1,5 @@
 <?php
+include('../headers.php');
 session_start();
 
 include('../db/db.php');

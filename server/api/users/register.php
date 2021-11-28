@@ -1,4 +1,5 @@
 <?php
+include('../headers.php');
 include('../db/db.php');
 $db = get_db();
 
