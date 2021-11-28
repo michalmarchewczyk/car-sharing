@@ -1,4 +1,6 @@
 <script>
+    import {createNotification} from '../store/notifications';
+
     export let user = {};
 
     $: isAdmin = user.type === 'ADMIN';
@@ -13,6 +15,12 @@
             body: formData
         });
         console.log(res);
+        if(res.status === 200){
+            createNotification(`Changed user[id=${user.id}] type to ${user.type}`, 'success')
+        }else{
+            createNotification(`Error: ${await res.text()}`, 'error')
+        }
+
     }
 </script>
 

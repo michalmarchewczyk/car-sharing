@@ -13,6 +13,7 @@ import Logout from './routes/Logout.svelte';
 import ModPanel from './routes/ModPanel.svelte';
 import AdminPanel from './routes/AdminPanel.svelte';
 import {onMount} from 'svelte';
+import Notifications from './components/Notifications.svelte';
 
 onMount(() => {
 	updateUserData();
@@ -48,6 +49,7 @@ onMount(() => {
 			</Route>
 		</main>
 	</div>
+	<Notifications/>
 </Router>
 
 <style lang="scss">
