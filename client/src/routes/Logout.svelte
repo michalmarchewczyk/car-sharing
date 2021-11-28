@@ -1,5 +1,4 @@
 <script>
-    import {SERVER_URL} from '../config';
     import Alert from '../components/Alert.svelte';
     import {updateUserData} from '../store/user';
 
@@ -10,9 +9,8 @@
     let errorType = 'error';
 
     const logout = async () => {
-        const res = await fetch(`${SERVER_URL}/api/users/logout.php`, {
+        const res = await fetch('/api/users/logout.php', {
             method: "GET",
-            credentials: 'include',
         })
         const text = await res.text();
         errorType = res.status === 200 ? 'success' : 'error';

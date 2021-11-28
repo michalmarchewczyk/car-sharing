@@ -22,7 +22,7 @@ onMount(() => {
 
 <Styles/>
 
-<Router>
+<Router primary={false}>
 	<div class="flex flex-col w-full h-full" use:links>
 		<Header/>
 		<main class="w-full flex flex-1 bg-gray-100">

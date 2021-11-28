@@ -1,14 +1,12 @@
 import {writable} from 'svelte/store';
-import {SERVER_URL} from '../config';
 
 export const user = writable({});
 export const loggedIn = writable(null);
 
 
 export const updateUserData = async () => {
-    const res = await fetch(`${SERVER_URL}/api/users/get_user_info.php`, {
+    const res = await fetch('/api/users/get_user_info.php', {
         method: "GET",
-        credentials: 'include',
     })
     if(res.status !== 200){
         loggedIn.set(false);

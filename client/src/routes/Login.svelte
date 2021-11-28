@@ -1,5 +1,4 @@
 <script>
-    import {SERVER_URL} from '../config';
     import Alert from '../components/Alert.svelte';
     import {loggedIn, updateUserData} from '../store/user';
     import {navigate} from 'svelte-navigator';
@@ -18,9 +17,8 @@
         const formData = new FormData();
         formData.append('email', email);
         formData.append('password', password);
-        const res = await fetch(`${SERVER_URL}/api/users/login.php`, {
+        const res = await fetch('/api/users/login.php', {
             method: "POST",
-            credentials: 'include',
             body: formData
         })
         const text = await res.text();
