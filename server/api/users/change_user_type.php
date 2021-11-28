@@ -17,6 +17,7 @@ if(!$user_id || !($type === 'MODERATOR' || $type === 'CUSTOMER' || $type === 'BA
     http_response_code(400);
     exit('Invalid request');
 }
+
 $stmt = $db->prepare("UPDATE users SET type=:type WHERE id=:id AND type!='ADMIN'");
 
 if(!$stmt){

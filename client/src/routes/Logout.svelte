@@ -9,9 +9,7 @@
     let errorType = 'error';
 
     const logout = async () => {
-        const res = await fetch('/api/users/logout.php', {
-            method: "GET",
-        })
+        const res = await fetch('/api/users/logout.php')
         const text = await res.text();
         errorType = res.status === 200 ? 'success' : 'error';
         error = text;
