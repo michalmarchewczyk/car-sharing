@@ -1,4 +1,6 @@
 <style lang="postcss" global>
+    @import "https://fonts.googleapis.com/icon?family=Material+Icons";
+
     @tailwind base;
     @tailwind components;
     @tailwind utilities;

@@ -14,6 +14,10 @@ import ModPanel from './routes/ModPanel.svelte';
 import AdminPanel from './routes/AdminPanel.svelte';
 import {onMount} from 'svelte';
 import Notifications from './components/Notifications.svelte';
+import CarModelsList from './components/CarModelsList.svelte';
+import UsersList from './components/UsersList.svelte';
+import CarModelsListItem from './components/CarModelsListItem.svelte';
+import AdminRoute from './routes/AdminRoute.svelte';
 
 onMount(() => {
 	updateUserData();
@@ -26,26 +30,24 @@ onMount(() => {
 <Router primary={false}>
 	<div class="flex flex-col w-full h-full" use:links>
 		<Header/>
-		<main class="w-full flex flex-1 bg-gray-100">
+		<main class="w-full flex flex-1 bg-gray-200 overflow-hidden">
 			<Route path="/"><Home/></Route>
 			<Route path="login"><Login/></Route>
 			<Route path="register"><Register/></Route>
 			<Route path="logout"><Logout/></Route>
 			<Route path="about"><About/></Route>
-			<Route path="panel">
+			<Route path="panel/*">
 				<Route path="/">
 					<Panel />
 				</Route>
 			</Route>
-			<Route path="mod">
+			<Route path="mod/*">
 				<Route path="/">
 					<ModPanel />
 				</Route>
 			</Route>
-			<Route path="admin">
-				<Route path="/">
-					<AdminPanel />
-				</Route>
+			<Route path="admin/*">
+				<AdminRoute/>
 			</Route>
 		</main>
 	</div>

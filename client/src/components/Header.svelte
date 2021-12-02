@@ -3,9 +3,8 @@
 
 </script>
 
-<nav class="shadow-lg w-full h-12 p-2 z-50 px-4">
-    <h1 class="">Car Sharing</h1>
-    <a href="/">Home</a>
+<nav class="shadow-lg w-full h-auto p-2 z-50 px-4 overflow-hidden">
+    <a href="/" class="h1">Car Sharing</a>
     <a href="/about">About</a>
     {#if $loggedIn !== null}
         {#if $loggedIn === true}
@@ -33,11 +32,11 @@
 <style lang="scss">
   nav {
 	a {
-	  @apply text-xl mx-4 text-gray-600 hover:text-gray-900 font-bold;
+	  @apply inline-block mx-3 text-gray-600 hover:text-gray-900 font-bold mb-2 float-left text-lg mt-1.5;
     }
 
-	h1 {
-	  @apply text-blue-700 text-xl font-bold float-left ml-2 mr-8;
+	.h1 {
+	  @apply text-blue-700 font-extrabold text-xl mt-1;
     }
   }
 </style>

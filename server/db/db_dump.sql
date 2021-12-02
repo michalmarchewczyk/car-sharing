@@ -10,12 +10,20 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `cars` (
   `id` int NOT NULL,
-  `make` varchar(30) NOT NULL,
-  `model` varchar(60) NOT NULL,
+  `model_id` int NOT NULL,
   `year` int NOT NULL,
-  `body_type` varchar(20) NOT NULL,
   `mileage` int NOT NULL,
   `availability` enum('AVAILABLE','WAITING','RESERVED') NOT NULL DEFAULT 'AVAILABLE'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `car_models` (
+  `id` int NOT NULL,
+  `make` varchar(30) NOT NULL,
+  `model` varchar(60) NOT NULL,
+  `body_type` varchar(20) NOT NULL,
+  `number_of_seats` int NOT NULL,
+  `power` int NOT NULL,
+  `transmission` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `reservations` (
@@ -74,6 +82,10 @@ CREATE TABLE `users` (
 
 
 ALTER TABLE `cars`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `car_model` (`model_id`);
+
+ALTER TABLE `car_models`
   ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `reservations`
@@ -89,12 +101,18 @@ ALTER TABLE `users`
 ALTER TABLE `cars`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
+ALTER TABLE `car_models`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
 ALTER TABLE `reservations`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `users`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
+
+ALTER TABLE `cars`
+  ADD CONSTRAINT `car_model` FOREIGN KEY (`model_id`) REFERENCES `car_models` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 ALTER TABLE `reservations`
   ADD CONSTRAINT `car_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,

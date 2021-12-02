@@ -5,6 +5,7 @@ import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
 import sveltePreprocess from 'svelte-preprocess';
+import image from '@rollup/plugin-image';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -31,6 +32,8 @@ export default {
 		}),
 
 		css({ output: 'bundle.css' }),
+
+		image(),
 
 		resolve({
 			browser: true,
