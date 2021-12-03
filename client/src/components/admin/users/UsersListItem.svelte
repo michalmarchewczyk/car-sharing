@@ -1,5 +1,5 @@
 <script>
-    import {createNotification} from '../store/notifications';
+    import {createNotification} from '../../../store/notifications';
 
     export let user = {};
 

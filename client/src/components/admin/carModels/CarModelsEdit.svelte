@@ -1,9 +1,9 @@
 <script>
-    import placeholderImage from '../assets/images/car_placeholder.png';
+    import placeholderImage from '../../../assets/images/car_placeholder.png';
     import {navigate, useParams} from 'svelte-navigator';
-    import Alert from './Alert.svelte';
-    import {carModels, editCarModel} from '../store/carModels';
-    import InputImage from './InputImage.svelte';
+    import Alert from '../../Alert.svelte';
+    import {carModels, editCarModel} from '../../../store/carModels';
+    import InputImage from '../../InputImage.svelte';
 
     let params = useParams();
 

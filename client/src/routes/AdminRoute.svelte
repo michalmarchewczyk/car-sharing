@@ -1,11 +1,11 @@
 <script>
     import {Route} from 'svelte-navigator';
     import AdminPanel from './AdminPanel.svelte';
-    import CarModelsList from '../components/CarModelsList.svelte';
-    import UsersList from '../components/UsersList.svelte';
-    import CarModelsAdd from '../components/CarModelsAdd.svelte';
-    import CarModelInfo from '../components/CarModelInfo.svelte';
-    import CarModelsEdit from '../components/CarModelsEdit.svelte';
+    import CarModelsList from '../components/admin/carModels/CarModelsList.svelte';
+    import UsersList from '../components/admin/users/UsersList.svelte';
+    import CarModelsAdd from '../components/admin/carModels/CarModelsAdd.svelte';
+    import CarModelInfo from '../components/admin/carModels/CarModelInfo.svelte';
+    import CarModelsEdit from '../components/admin/carModels/CarModelsEdit.svelte';
 </script>
 
 <Route path="car-models/*">

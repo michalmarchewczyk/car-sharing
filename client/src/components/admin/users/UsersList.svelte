@@ -1,5 +1,5 @@
 <script>
-    import Alert from './Alert.svelte';
+    import Alert from '../../Alert.svelte';
     import UsersListItem from './UsersListItem.svelte';
     import {useLocation} from 'svelte-navigator';
 

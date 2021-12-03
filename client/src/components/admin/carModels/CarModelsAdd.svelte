@@ -1,8 +1,8 @@
 <script>
-    import placeholderImage from '../assets/images/car_placeholder.png';
+    import placeholderImage from '../../../assets/images/car_placeholder.png';
     import {navigate} from 'svelte-navigator';
-    import {addCarModel} from '../store/carModels';
-    import InputImage from './InputImage.svelte';
+    import {addCarModel} from '../../../store/carModels';
+    import InputImage from '../../InputImage.svelte';
 
     let make = '';
     let model = '';

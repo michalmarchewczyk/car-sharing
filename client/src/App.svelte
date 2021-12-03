@@ -14,9 +14,9 @@ import ModPanel from './routes/ModPanel.svelte';
 import AdminPanel from './routes/AdminPanel.svelte';
 import {onMount} from 'svelte';
 import Notifications from './components/Notifications.svelte';
-import CarModelsList from './components/CarModelsList.svelte';
-import UsersList from './components/UsersList.svelte';
-import CarModelsListItem from './components/CarModelsListItem.svelte';
+import CarModelsList from './components/admin/carModels/CarModelsList.svelte';
+import UsersList from './components/admin/users/UsersList.svelte';
+import CarModelsListItem from './components/admin/carModels/CarModelsListItem.svelte';
 import AdminRoute from './routes/AdminRoute.svelte';
 
 onMount(() => {

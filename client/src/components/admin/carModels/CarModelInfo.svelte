@@ -1,7 +1,7 @@
 <script>
     import {navigate, useParams} from 'svelte-navigator';
-    import placeholderImage from '../assets/images/car_placeholder.png';
-    import {carModels, deleteCarModel} from '../store/carModels';
+    import placeholderImage from '../../../assets/images/car_placeholder.png';
+    import {carModels, deleteCarModel} from '../../../store/carModels';
 
     let params = useParams();
 

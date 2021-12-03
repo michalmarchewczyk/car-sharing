@@ -1,7 +1,7 @@
 <script>
     import CarModelsListItem from './CarModelsListItem.svelte';
     import {useLocation} from 'svelte-navigator';
-    import {carModels, fetchCarModels} from '../store/carModels';
+    import {carModels, fetchCarModels} from '../../../store/carModels';
     import {onMount} from 'svelte';
 
     const location = useLocation();
