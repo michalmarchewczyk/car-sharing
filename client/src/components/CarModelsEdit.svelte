@@ -3,6 +3,7 @@
     import {navigate, useParams} from 'svelte-navigator';
     import Alert from './Alert.svelte';
     import {carModels, editCarModel} from '../store/carModels';
+    import InputImage from './InputImage.svelte';
 
     let params = useParams();
 
@@ -16,6 +17,10 @@
     let numberOfSeats = '';
     let power = '';
     let transmission = '';
+
+    let newImage;
+
+    $: newImageSrc = newImage ? URL.createObjectURL(newImage) : null;
 
     $: {
         if(!initialized && carModel.id) {
@@ -44,12 +49,13 @@
 
 
     const submit = async () => {
-        if(make === carModel.make && model === carModel.model && bodyType === carModel.bodyType &&
-            numberOfSeats === carModel.numberOfSeats && power === carModel.power && transmission === carModel.transmission){
+        if(make === carModel.make && model === carModel.model && bodyType === carModel.bodyType && numberOfSeats === carModel.numberOfSeats
+            && power === carModel.power && transmission === carModel.transmission && !newImage){
             navigate('/admin/car-models/'+$params.id);
             return;
         }
-        const edited = await editCarModel({id: $params.id, make, model, bodyType, numberOfSeats, power, transmission});
+        const edited = await editCarModel({id: $params.id,
+            make, model, bodyType, numberOfSeats, power, transmission, image:newImage});
         if(edited){
             navigate('/admin/car-models/'+$params.id);
         }
@@ -100,11 +106,14 @@
                          class="h-60 rounded-lg mb-2 float-right"/>
                 {:then image}
                     <div class="h-60 w-full max-w-sm mb-2 relative flex justify-center items-center float-right">
-                        <img src={image} alt="{make + ' ' + model}" class="rounded-lg"/>
+                        <img src={newImageSrc ?? image ?? placeholderImage} alt="{make + ' ' + model}" class="rounded-lg"/>
+                        <InputImage bind:image={newImage} title=""/>
                     </div>
                 {:catch error}
-                    <img src={placeholderImage} alt="{make + ' ' + model}"
-                         class="h-60 rounded-lg mb-2 float-right"/>
+                    <div class="h-60 w-full max-w-sm mb-2 relative flex justify-center items-center float-right">
+                        <img src={newImageSrc ?? placeholderImage} alt="{make + ' ' + model}" class="rounded-lg"/>
+                        <InputImage bind:image={newImage} title=""/>
+                    </div>
                 {/await}
             </div>
             <div class="block float-right">

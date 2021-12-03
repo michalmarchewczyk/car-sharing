@@ -43,7 +43,7 @@ export const deleteCarModel = async ({id}) => {
 }
 
 
-export const addCarModel = async ({make, model, bodyType, numberOfSeats, power, transmission}) => {
+export const addCarModel = async ({make, model, bodyType, numberOfSeats, power, transmission, image}) => {
     const formData = new FormData();
     formData.append('make', make);
     formData.append('model', model);
@@ -51,6 +51,7 @@ export const addCarModel = async ({make, model, bodyType, numberOfSeats, power, 
     formData.append('number_of_seats', numberOfSeats);
     formData.append('power', power);
     formData.append('transmission', transmission);
+    formData.append('image', image);
     const res = await fetch('/api/cars/add_car_model.php', {
         method: 'POST',
         body: formData
@@ -58,6 +59,7 @@ export const addCarModel = async ({make, model, bodyType, numberOfSeats, power, 
     const text = await res.text();
     if (res.status === 201) {
         createNotification('Added new car model', 'success');
+        console.log(text);
         carModels.update(models => {
             return [{
                 id: text,
@@ -70,7 +72,7 @@ export const addCarModel = async ({make, model, bodyType, numberOfSeats, power, 
 }
 
 
-export const editCarModel = async ({id, make, model, bodyType, numberOfSeats, power, transmission}) => {
+export const editCarModel = async ({id, make, model, bodyType, numberOfSeats, power, transmission, image}) => {
     const formData = new FormData();
     formData.append('id', id);
     formData.append('make', make);
@@ -79,6 +81,7 @@ export const editCarModel = async ({id, make, model, bodyType, numberOfSeats, po
     formData.append('number_of_seats', numberOfSeats);
     formData.append('power', power);
     formData.append('transmission', transmission);
+    formData.append('image', image);
     const res = await fetch('/api/cars/edit_car_model.php', {
         method: 'POST',
         body: formData

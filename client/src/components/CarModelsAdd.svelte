@@ -2,6 +2,7 @@
     import placeholderImage from '../assets/images/car_placeholder.png';
     import {navigate} from 'svelte-navigator';
     import {addCarModel} from '../store/carModels';
+    import InputImage from './InputImage.svelte';
 
     let make = '';
     let model = '';
@@ -10,8 +11,12 @@
     let power = '';
     let transmission = '';
 
+    let image;
+
+    $: imageSrc = image ? URL.createObjectURL(image) : null;
+
     const submit = async () => {
-        const added = await addCarModel({make, model, bodyType, numberOfSeats, power, transmission});
+        const added = await addCarModel({make, model, bodyType, numberOfSeats, power, transmission, image});
         if(added){
             navigate('/admin/car-models');
         }
@@ -52,10 +57,11 @@
                 <input type="text" bind:value={transmission} required/>
             </label>
         </div>
-        <div class="ml-6 flex-1 flex-shrink-0" style="min-width: 16rem">
-            <div class="block h-80 mb-8 flex justify-end items-center">
-                <img src={placeholderImage} alt="Add image"
+        <div class="ml-12 flex-1 flex-shrink-0" style="min-width: 16rem">
+            <div class="block h-80 mb-8 flex justify-center items-center relative">
+                <img src={imageSrc ?? placeholderImage} alt="Add image"
                      class="h-60 rounded-lg mb-2 float-right"/>
+                <InputImage bind:image title="Add image"/>
             </div>
             <div class="block float-right">
                 <button class="button mx-2 float-right" on:click|preventDefault={() => {submit()}}>
@@ -79,11 +85,11 @@
 	  @apply block w-full mb-2 flex flex-row;
 	}
 
-	label > span {
+	form > div > label > span {
 	  @apply text-xl text-gray-800 my-1 mr-4 whitespace-nowrap flex-shrink-0 flex-grow-0 font-bold;
 	}
 
-	input {
+	input:not([type='file']) {
 	  @apply block flex-1 border-2 border-gray-600 focus:border-blue-600 h-10 rounded-md my-1 text-lg;
 	  text-indent: 0.5rem;
 	  flex-basis: 4rem;

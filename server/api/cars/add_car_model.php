@@ -41,6 +41,11 @@ try {
     $stmt->execute();
     http_response_code(201);
     $id = $db->lastInsertId();
+    if(isset($_FILES['image'])){
+        require_once 'add_car_model_image.php';
+        add_car_model_image($id, $_FILES['image']);
+    }
+    http_response_code(201);
     exit($id);
 }catch(PDOException | JsonException $ex){
     http_response_code(500);

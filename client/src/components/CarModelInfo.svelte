@@ -46,7 +46,7 @@
                 <img src={placeholderImage} alt="{carModel.make + ' ' + carModel.model}"
                      class="h-60 rounded-lg mb-2 float-right"/>
             {:then image}
-                <div class="h-60 w-full max-w-sm mb-2 relative flex justify-center items-center float-right">
+                <div class="h-60 w-full max-w-sm mb-4 mt-4 relative flex justify-center items-center float-right">
                     <img src={image} alt="{carModel.make + ' ' + carModel.model}" class="rounded-lg"/>
                 </div>
             {:catch error}

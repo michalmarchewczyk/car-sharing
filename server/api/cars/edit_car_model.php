@@ -42,11 +42,15 @@ $stmt->bindParam(':transmission', $transmission);
 try {
     $stmt->execute();
     $num = $stmt->rowCount();
-    if($num < 1){
+    if($num < 1 && !isset($_FILES['image'])){
         http_response_code(404);
         exit("Car model with given id doesn't exist");
     }
     http_response_code(200);
+    if(isset($_FILES['image'])){
+        require_once 'add_car_model_image.php';
+        add_car_model_image($id, $_FILES['image']);
+    }
     exit('Edited car model');
 }catch(PDOException | JsonException $ex){
     http_response_code(500);
