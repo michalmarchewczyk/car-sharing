@@ -1,29 +1,15 @@
 <script>
-    import Alert from './Alert.svelte';
     import CarModelsListItem from './CarModelsListItem.svelte';
     import {useLocation} from 'svelte-navigator';
-    import {latestCarModelsUpdate} from '../store/cars';
+    import {carModels, fetchCarModels} from '../store/carModels';
+    import {onMount} from 'svelte';
 
     const location = useLocation();
 
-    $: fetchCarModels = async () => {
-        const res = await fetch('/api/cars/get_car_models_list.php?update'+$latestCarModelsUpdate);
-        if(res.status === 200){
-            let data = await res.json();
-            data = data.reverse();
-            return data.map(c => ({
-                id: c['id'],
-                make: c['make'],
-                model: c['model'],
-                bodyType: c['body_type'],
-                numberOfSeats: c['number_of_seats'],
-                power: c['power'],
-                transmission: c['transmission'],
-            }));
-        }else{
-            throw new Error(await res.text());
-        }
-    }
+    onMount(async () => {
+        console.log('LOAD CAR MODELS');
+        await fetchCarModels();
+    });
 </script>
 
 
@@ -37,21 +23,18 @@
             </a>
         {/if}
     </h2>
-    {#await fetchCarModels()}
-        <p class="text-center text-lg font-bold text-gray-400 my-8">Loading...</p>
-    {:then carModels}
-        <div class="overflow-y-auto flex-1 px-2 pb-2">
-            <a href="/admin/car-models/add" class="button w-full shadow">
-                <span class="material-icons top-0.5 relative float-left mr-1">add</span> Add new car model
-            </a>
-            {#each $location.pathname === '/admin' ? carModels.slice(0,6) : carModels as carModel}
-                <CarModelsListItem carModel={carModel}/>
-            {/each}
-
-        </div>
-    {:catch error}
-        <Alert type="error">{error}</Alert>
-    {/await}
+    <div class="overflow-y-auto flex-1 px-2 pb-2">
+        <a href="/admin/car-models/add" class="button w-full shadow">
+            <span class="material-icons top-0.5 relative float-left mr-1">add</span> Add new car model
+        </a>
+        {#each $location.pathname === '/admin' ? $carModels.slice(0,6) : $carModels as carModel}
+            <CarModelsListItem carModel={carModel}/>
+        {:else}
+            <div class="h-24 pt-12 flex-1 rounded-xl pb-0 max-w-3xl text-3xl font-bold text-gray-400 text-center " style="min-width: 20rem">
+                No car models
+            </div>
+        {/each}
+    </div>
 </div>
 
 

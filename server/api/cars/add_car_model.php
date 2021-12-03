@@ -40,7 +40,8 @@ $stmt->bindParam(':transmission', $transmission);
 try {
     $stmt->execute();
     http_response_code(201);
-    exit('Added new car model');
+    $id = $db->lastInsertId();
+    exit($id);
 }catch(PDOException | JsonException $ex){
     http_response_code(500);
     exit($ex->getMessage());

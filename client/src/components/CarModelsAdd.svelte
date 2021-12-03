@@ -1,12 +1,7 @@
 <script>
     import placeholderImage from '../assets/images/car_placeholder.png';
     import {navigate} from 'svelte-navigator';
-    import Alert from './Alert.svelte';
-    import {updateCarModels} from '../store/cars';
-    import {createNotification} from '../store/notifications';
-
-    let error = '';
-    let errorType = '';
+    import {addCarModel} from '../store/carModels';
 
     let make = '';
     let model = '';
@@ -16,24 +11,9 @@
     let transmission = '';
 
     const submit = async () => {
-        const formData = new FormData();
-        formData.append('make', make);
-        formData.append('model', model);
-        formData.append('body_type', bodyType);
-        formData.append('number_of_seats', numberOfSeats);
-        formData.append('power', power);
-        formData.append('transmission', transmission);
-        const res = await fetch('/api/cars/add_car_model.php', {
-            method: 'POST',
-            body: formData
-        })
-        const text = await res.text();
-        errorType = res.status === 201 ? '' : 'error';
-        error = res.status === 201 ? '' : text;
-        if (res.status === 201) {
-            createNotification('Added new car model', 'success');
-            updateCarModels();
-            // navigate('/admin/car-models')
+        const added = await addCarModel({make, model, bodyType, numberOfSeats, power, transmission});
+        if(added){
+            navigate('/admin/car-models');
         }
     }
 </script>
@@ -71,9 +51,6 @@
                 <span>Transmission: </span>
                 <input type="text" bind:value={transmission} required/>
             </label>
-            {#if error}
-                <Alert type={errorType}>{error}</Alert>
-            {/if}
         </div>
         <div class="ml-6 flex-1 flex-shrink-0" style="min-width: 16rem">
             <div class="block h-80 mb-8 flex justify-end items-center">

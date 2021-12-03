@@ -2,10 +2,13 @@
     import placeholderImage from '../assets/images/car_placeholder.png';
     import {navigate, useParams} from 'svelte-navigator';
     import Alert from './Alert.svelte';
-    import {updateCarModels} from '../store/cars';
-    import {createNotification} from '../store/notifications';
+    import {carModels, editCarModel} from '../store/carModels';
 
     let params = useParams();
+
+    $: carModel = $carModels.find(carModel => carModel.id === $params.id) ?? {};
+
+    let initialized = false;
 
     let make = '';
     let model = '';
@@ -14,18 +17,15 @@
     let power = '';
     let transmission = '';
 
-    const fetchCarModel = async () => {
-        const res = await fetch('/api/cars/get_car_model.php?id='+$params.id);
-        if(res.status === 200){
-            const data = await res.json();
-            make = data['make']
-            model = data['model']
-            bodyType = data['body_type']
-            numberOfSeats = data['number_of_seats'];
-            power = data['power']
-            transmission = data['transmission'];
-        }else{
-            throw new Error(await res.text());
+    $: {
+        if(!initialized && carModel.id) {
+            initialized = true;
+            make = carModel.make ?? '';
+            model = carModel.model ?? '';
+            bodyType = carModel.bodyType ?? '';
+            numberOfSeats = carModel.numberOfSeats ?? '';
+            power = carModel.power ?? '';
+            transmission = carModel.transmission ?? '';
         }
     }
 
@@ -43,27 +43,15 @@
     let errorType = '';
 
 
-
     const submit = async () => {
-        const formData = new FormData();
-        formData.append('id', $params.id);
-        formData.append('make', make);
-        formData.append('model', model);
-        formData.append('body_type', bodyType);
-        formData.append('number_of_seats', numberOfSeats);
-        formData.append('power', power);
-        formData.append('transmission', transmission);
-        const res = await fetch('/api/cars/edit_car_model.php', {
-            method: 'POST',
-            body: formData
-        })
-        const text = await res.text();
-        errorType = res.status === 200 ? '' : 'error';
-        error = res.status === 200 ? '' : text;
-        if (res.status === 200) {
-            createNotification('Edited car model [id='+$params.id+']', 'success');
-            updateCarModels();
-            navigate('/admin/car-models/'+$params.id)
+        if(make === carModel.make && model === carModel.model && bodyType === carModel.bodyType &&
+            numberOfSeats === carModel.numberOfSeats && power === carModel.power && transmission === carModel.transmission){
+            navigate('/admin/car-models/'+$params.id);
+            return;
+        }
+        const edited = await editCarModel({id: $params.id, make, model, bodyType, numberOfSeats, power, transmission});
+        if(edited){
+            navigate('/admin/car-models/'+$params.id);
         }
     }
 </script>
@@ -73,69 +61,62 @@
     <h2 class="text-left m-2 text-xl font-bold text-gray-700 px-2">
         Edit car model [id={$params.id}]
     </h2>
-    {#await fetchCarModel()}
-        <p class="text-center text-lg font-bold text-gray-400 my-8">Loading...</p>
-    {:then carModel}
-        <form on:submit|preventDefault={() => {submit()}}
-              class="block bg-white rounded-lg shadow-lg mx-2 my-3 mb-4 p-4 px-5 flex flex-row justify-between flex-wrap">
-            <div class="float-left w-80">
-                <h3 class="text-3xl mb-5 mt-1 font-bold text-gray-900">Edit car model</h3>
-                <label>
-                    <span>Make: </span>
-                    <input type="text" bind:value={make} required/>
-                </label>
-                <label>
-                    <span>Model: </span>
-                    <input type="text" bind:value={model} required/>
-                </label>
-                <label>
-                    <span>Body type: </span>
-                    <input type="text" bind:value={bodyType} required/>
-                </label>
-                <label>
-                    <span>Number of seats: </span>
-                    <input type="number" bind:value={numberOfSeats} required/>
-                </label>
-                <label>
-                    <span>Power: </span>
-                    <input type="number" bind:value={power} required/>
-                </label>
-                <label>
-                    <span>Transmission: </span>
-                    <input type="text" bind:value={transmission} required/>
-                </label>
-                {#if error}
-                    <Alert type={errorType}>{error}</Alert>
-                {/if}
+    <form on:submit|preventDefault={() => {submit()}}
+          class="block bg-white rounded-lg shadow-lg mx-2 my-3 mb-4 p-4 px-5 flex flex-row justify-between flex-wrap">
+        <div class="float-left w-80">
+            <h3 class="text-3xl mb-5 mt-1 font-bold text-gray-900">Edit car model</h3>
+            <label>
+                <span>Make: </span>
+                <input type="text" bind:value={make} required/>
+            </label>
+            <label>
+                <span>Model: </span>
+                <input type="text" bind:value={model} required/>
+            </label>
+            <label>
+                <span>Body type: </span>
+                <input type="text" bind:value={bodyType} required/>
+            </label>
+            <label>
+                <span>Number of seats: </span>
+                <input type="number" bind:value={numberOfSeats} required/>
+            </label>
+            <label>
+                <span>Power: </span>
+                <input type="number" bind:value={power} required/>
+            </label>
+            <label>
+                <span>Transmission: </span>
+                <input type="text" bind:value={transmission} required/>
+            </label>
+            {#if error}
+                <Alert type={errorType}>{error}</Alert>
+            {/if}
+        </div>
+        <div class="ml-6 flex-1 flex-shrink-0" style="min-width: 16rem">
+            <div class="block h-80 mb-8 flex justify-end items-center">
+                {#await fetchImage()}
+                    <img src={placeholderImage} alt="{make + ' ' + model}"
+                         class="h-60 rounded-lg mb-2 float-right"/>
+                {:then image}
+                    <div class="h-60 w-full max-w-sm mb-2 relative flex justify-center items-center float-right">
+                        <img src={image} alt="{make + ' ' + model}" class="rounded-lg"/>
+                    </div>
+                {:catch error}
+                    <img src={placeholderImage} alt="{make + ' ' + model}"
+                         class="h-60 rounded-lg mb-2 float-right"/>
+                {/await}
             </div>
-            <div class="ml-6 flex-1 flex-shrink-0" style="min-width: 16rem">
-                <div class="block h-80 mb-8 flex justify-end items-center">
-                    {#await fetchImage()}
-                        <img src={placeholderImage} alt="{make + ' ' + model}"
-                             class="h-60 rounded-lg mb-2 float-right"/>
-                    {:then image}
-                        <div class="h-60 w-full max-w-sm mb-2 relative flex justify-center items-center float-right">
-                            <img src={image} alt="{make + ' ' + model}" class="rounded-lg"/>
-                        </div>
-                    {:catch error}
-                        <img src={placeholderImage} alt="{make + ' ' + model}"
-                             class="h-60 rounded-lg mb-2 float-right"/>
-                    {/await}
-                </div>
-                <div class="block float-right">
-                    <button class="button mx-2 float-right" on:click|preventDefault={() => {submit()}}>
-                        Save <span class="material-icons top-0.5 relative float-right ml-3">check</span>
-                    </button>
-                    <button class="button mx-2 float-right ml-4" on:click|preventDefault={() => navigate('/admin/car-models/'+$params.id)}>
-                        Cancel <span class="material-icons top-0.5 relative float-right ml-3">close</span>
-                    </button>
-                </div>
+            <div class="block float-right">
+                <button class="button mx-2 float-right" on:click|preventDefault={() => {submit()}}>
+                    Save <span class="material-icons top-0.5 relative float-right ml-3">check</span>
+                </button>
+                <button class="button mx-2 float-right ml-4" on:click|preventDefault={() => navigate('/admin/car-models/'+$params.id)}>
+                    Cancel <span class="material-icons top-0.5 relative float-right ml-3">close</span>
+                </button>
             </div>
-        </form>
-    {:catch error}
-        <Alert type="error">{error}</Alert>
-    {/await}
-
+        </div>
+    </form>
 </div>
 
 
