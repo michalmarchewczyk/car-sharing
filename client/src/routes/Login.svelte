@@ -40,7 +40,7 @@
     <h1 class="text-center m-6 text-3xl font-bold text-gray-700">
         Login
     </h1>
-    <form on:submit|preventDefault={submit} class="shadow-lg h-auto w-96 p-6 rounded-xl bg-white pt-4 pb-2">
+    <form on:submit|preventDefault={submit} class="shadow-lg h-auto w-96 p-6 rounded-xl bg-white pt-2 pb-2 mb-20">
         {#if error}
             <Alert type={errorType}>{error}</Alert>
         {/if}

@@ -29,7 +29,7 @@
     <h1 class="text-center m-6 text-3xl font-bold text-gray-700">
         Logout
     </h1>
-    <div class="shadow-lg h-auto w-96 p-6 rounded-xl bg-white pt-6 pb-2">
+    <div class="shadow-lg h-auto w-96 p-6 rounded-xl bg-white pt-6 pb-2 mb-20">
         {#if error}
             <Alert type={errorType}>{error}</Alert>
         {/if}
