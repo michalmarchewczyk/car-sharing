@@ -13,7 +13,7 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 
 
-$stmt = $db->prepare("SELECT id, type, password FROM users WHERE email=:email AND type!='BANNED'");
+$stmt = $db->prepare("SELECT id, type, password FROM users WHERE email=:email AND type!='BANNED' AND type!='WAITING'");
 if(!$stmt){
     http_response_code(500);
     exit();

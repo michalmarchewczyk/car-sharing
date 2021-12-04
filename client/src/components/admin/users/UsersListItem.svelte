@@ -34,6 +34,7 @@
     </div>
     <div class="w-32 ml-4">
         <select bind:value={user.type} {disabled} on:change={changeType}>
+            <option value="WAITING" disabled>WAITING</option>
             <option value="CUSTOMER">CUSTOMER</option>
             <option value="MODERATOR">MODERATOR</option>
             <option value="BANNED">BANNED</option>
