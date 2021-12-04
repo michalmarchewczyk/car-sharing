@@ -3,7 +3,7 @@ version: '3'
 
 services:
   db:
-    image: mysql:8
+    build: ./db
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"

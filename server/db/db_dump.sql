@@ -7,7 +7,10 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
+CREATE DATABASE IF NOT EXISTS `db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE `db`;
 
+DROP TABLE IF EXISTS `cars`;
 CREATE TABLE `cars` (
   `id` int NOT NULL,
   `model_id` int NOT NULL,
@@ -17,6 +20,7 @@ CREATE TABLE `cars` (
   `availability` enum('AVAILABLE','WAITING','RESERVED') NOT NULL DEFAULT 'AVAILABLE'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+DROP TABLE IF EXISTS `car_models`;
 CREATE TABLE `car_models` (
   `id` int NOT NULL,
   `make` varchar(30) NOT NULL,
@@ -27,6 +31,7 @@ CREATE TABLE `car_models` (
   `transmission` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+DROP TABLE IF EXISTS `reservations`;
 CREATE TABLE `reservations` (
   `id` int NOT NULL,
   `user_id` int NOT NULL,
@@ -35,6 +40,7 @@ CREATE TABLE `reservations` (
   `end_time` date NOT NULL,
   `status` enum('WAITING','CONFIRMED','CANCELLED','ACTIVE','DONE') NOT NULL DEFAULT 'WAITING'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+DROP TRIGGER IF EXISTS `update_car_availability_on_insert`;
 DELIMITER $$
 CREATE TRIGGER `update_car_availability_on_insert` AFTER INSERT ON `reservations` FOR EACH ROW BEGIN
 	DECLARE waiting_count INT;
@@ -53,6 +59,7 @@ CREATE TRIGGER `update_car_availability_on_insert` AFTER INSERT ON `reservations
 END
 $$
 DELIMITER ;
+DROP TRIGGER IF EXISTS `update_car_availability_on_update`;
 DELIMITER $$
 CREATE TRIGGER `update_car_availability_on_update` AFTER UPDATE ON `reservations` FOR EACH ROW BEGIN
 	DECLARE waiting_count INT;
@@ -72,6 +79,7 @@ END
 $$
 DELIMITER ;
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int NOT NULL,
   `first_name` varchar(30) NOT NULL,
