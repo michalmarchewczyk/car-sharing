@@ -63,7 +63,7 @@
                 <button class="button mx-2 float-right" on:click={() => {
                     navigate('/admin/cars/add', {state: {modelId: $params.id}})
                 }}>
-                    Add cars<span class="material-icons top-0.5 relative float-right ml-3">add</span>
+                    Add car<span class="material-icons top-0.5 relative float-right ml-3">add</span>
                 </button>
             </div>
         </div>

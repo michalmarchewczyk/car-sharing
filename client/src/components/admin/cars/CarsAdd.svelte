@@ -34,12 +34,12 @@
 
 <div class="car-models-add mx-0 max-h-full overflow-hidden flex flex-col">
     <h2 class="text-left m-2 text-xl font-bold text-gray-700 px-2">
-        Add car model
+        Add car
     </h2>
     <form on:submit|preventDefault={() => {submit()}}
           class="block bg-white rounded-lg shadow-lg mx-2 my-3 mb-4 p-4 px-5 flex flex-row justify-between flex-wrap">
         <div class="float-left w-80">
-            <h3 class="text-3xl mb-5 mt-1 font-bold text-gray-900">Add car model</h3>
+            <h3 class="text-3xl mb-5 mt-1 font-bold text-gray-900">Add car</h3>
             <label>
                 <span>Model id: </span>
                 <input type="text" bind:value={modelId} required/>

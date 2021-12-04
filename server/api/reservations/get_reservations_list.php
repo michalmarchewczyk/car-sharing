@@ -5,8 +5,8 @@ $db = get_db();
 
 require '../users/guard_is_moderator.php';
 
-$stmt = $db->prepare("SELECT cars.id, car_models.id as model_id, year, mileage, color, availability, make, model, body_type, number_of_seats, power, transmission FROM cars
-    LEFT JOIN car_models on car_models.id = cars.model_id");
+$stmt = $db->prepare("SELECT reservations.id, user_id, car_id, start_time, end_time, status, first_name, last_name
+    FROM reservations LEFT JOIN users on users.id = reservations.user_id");
 
 if (!$stmt) {
     http_response_code(500);

@@ -18,6 +18,7 @@ import CarModelsList from './components/admin/carModels/CarModelsList.svelte';
 import UsersList from './components/admin/users/UsersList.svelte';
 import CarModelsListItem from './components/admin/carModels/CarModelsListItem.svelte';
 import AdminRoute from './routes/AdminRoute.svelte';
+import ModRoute from './routes/ModRoute.svelte';
 
 onMount(() => {
 	updateUserData();
@@ -42,9 +43,7 @@ onMount(() => {
 				</Route>
 			</Route>
 			<Route path="mod/*">
-				<Route path="/">
-					<ModPanel />
-				</Route>
+				<ModRoute/>
 			</Route>
 			<Route path="admin/*">
 				<AdminRoute/>

@@ -3,7 +3,7 @@ include('../headers.php');
 include('../db/db.php');
 $db = get_db();
 
-require '../users/guard_is_admin.php';
+require '../users/guard_is_moderator.php';
 
 $stmt = $db->prepare("SELECT id, make, model, body_type, number_of_seats, power, transmission FROM car_models");
 

@@ -9,14 +9,14 @@
 
 </script>
 
-<div class="car-models-list-item" on:click={openCarInfo}>
+<div class="cars-list-item" on:click={openCarInfo}>
     <div class="w-24 flex-grow">
-        <span class="car-models-list-item-name overflow-ellipsis overflow-hidden">
+        <span class="cars-list-item-name overflow-ellipsis overflow-hidden">
             {car.make} {car.model}
         </span>
-        <span class="car-models-list-item-id overflow-ellipsis overflow-hidden">
+        <span class="cars-list-item-id overflow-ellipsis overflow-hidden">
             {car.bodyType}, {car.numberOfSeats} seats, {car.power} hp, {car.transmission}</span>
-        <span class="car-models-list-item-id overflow-ellipsis overflow-hidden">
+        <span class="cars-list-item-id overflow-ellipsis overflow-hidden">
             {car.color}, {car.mileage} km, {car.year} yr</span>
     </div>
     <div class="w-32 ml-4">
@@ -27,23 +27,23 @@
 </div>
 
 <style lang="scss">
-    .car-models-list-item {
+    .cars-list-item {
       @apply shadow-lg bg-white rounded-lg my-3 p-2 px-4 flex flex-row w-full cursor-pointer;
 
       &:hover {
         span {
-          &.car-models-list-item-name {
+          &.cars-list-item-name {
             @apply text-blue-700;
           }
         }
       }
       span {
         @apply block flex-1 whitespace-nowrap;
-        &.car-models-list-item-name {
+        &.cars-list-item-name {
           @apply text-lg font-bold text-gray-800;
 
         }
-        &.car-models-list-item-id {
+        &.cars-list-item-id {
 		  @apply text-base text-gray-700;
         }
 	  }
