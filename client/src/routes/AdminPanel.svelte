@@ -1,6 +1,9 @@
 <script>
     import {loggedIn, user} from '../store/user';
     import {navigate} from 'svelte-navigator';
+    import {onMount} from 'svelte';
+    import {fetchCars} from '../store/cars';
+    import {fetchCarModels} from '../store/carModels';
 
     $: if($loggedIn === false){
         navigate('/login');
@@ -11,6 +14,11 @@
     }
 
     export let scrollable = true;
+
+    onMount(async () => {
+        await fetchCars();
+        await fetchCarModels();
+    });
 </script>
 
 <svelte:head>

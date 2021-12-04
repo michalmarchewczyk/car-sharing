@@ -60,6 +60,11 @@
                 <a href='/admin/car-models/edit/{$params.id}' class="button mx-2 float-right">
                     Edit <span class="material-icons top-0.5 relative float-right ml-3">edit</span>
                 </a>
+                <button class="button mx-2 float-right" on:click={() => {
+                    navigate('/admin/cars/add', {state: {modelId: $params.id}})
+                }}>
+                    Add cars<span class="material-icons top-0.5 relative float-right ml-3">add</span>
+                </button>
             </div>
         </div>
     </div>

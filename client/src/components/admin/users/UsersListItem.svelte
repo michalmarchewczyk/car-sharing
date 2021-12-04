@@ -27,7 +27,10 @@
 <div class="users-list-item">
     <div class="w-24 flex-grow">
         <span class="users-list-item-name overflow-ellipsis overflow-hidden">{user.firstName} {user.lastName}</span>
-        <span class="users-list-item-id overflow-ellipsis overflow-hidden">{user.id}: {user.email}</span>
+        <span class="users-list-item-id overflow-ellipsis overflow-hidden">
+            <span class="text-gray-400 text-base font-normal">[id={user.id}]</span>
+            {user.email}
+        </span>
     </div>
     <div class="w-32 ml-4">
         <select bind:value={user.type} {disabled} on:change={changeType}>
@@ -45,7 +48,7 @@
     .users-list-item {
       @apply shadow-lg bg-white rounded-lg my-3 p-2 px-4 flex flex-row w-full;
 
-      span {
+      div > span {
         @apply block flex-1 whitespace-nowrap;
         &.users-list-item-name {
           @apply text-lg font-bold text-gray-800;

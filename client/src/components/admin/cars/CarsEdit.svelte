@@ -2,40 +2,33 @@
     import placeholderImage from '../../../assets/images/car_placeholder.png';
     import {navigate, useParams} from 'svelte-navigator';
     import Alert from '../../Alert.svelte';
-    import {carModels, editCarModel} from '../../../store/carModels';
+    import {carModels} from '../../../store/carModels';
     import InputImage from '../../InputImage.svelte';
+    import {cars, editCar} from '../../../store/cars';
 
     let params = useParams();
 
-    $: carModel = $carModels.find(carModel => carModel.id === $params.id) ?? {};
+    $: car = $cars.find(car => car.id === $params.id) ?? {};
+
+    $: carModel = $carModels.find(carModel => carModel.id === car.modelId) ?? {};
 
     let initialized = false;
 
-    let make = '';
-    let model = '';
-    let bodyType = '';
-    let numberOfSeats = '';
-    let power = '';
-    let transmission = '';
-
-    let newImage;
-
-    $: newImageSrc = newImage ? URL.createObjectURL(newImage) : null;
+    let mileage = '';
+    let year = '';
+    let color = '';
 
     $: {
-        if(!initialized && carModel.id) {
+        if(!initialized && car.id) {
             initialized = true;
-            make = carModel.make ?? '';
-            model = carModel.model ?? '';
-            bodyType = carModel.bodyType ?? '';
-            numberOfSeats = carModel.numberOfSeats ?? '';
-            power = carModel.power ?? '';
-            transmission = carModel.transmission ?? '';
+            mileage = car.mileage;
+            year = car.year;
+            color = car.color;
         }
     }
 
-    const fetchImage = async () => {
-        const res = await fetch('/data/photos/car_models/'+$params.id+'.jpg');
+    $: fetchImage = async () => {
+        const res = await fetch('/data/photos/car_models/'+car.modelId+'.jpg');
         if(res.status === 200){
             const data = await res.blob();
             return URL.createObjectURL(data);
@@ -46,15 +39,13 @@
 
 
     const submit = async () => {
-        if(make === carModel.make && model === carModel.model && bodyType === carModel.bodyType && numberOfSeats === carModel.numberOfSeats
-            && power === carModel.power && transmission === carModel.transmission && !newImage){
-            navigate('/admin/car-models/'+$params.id);
+        if(mileage === car.mileage && year === car.year && color === car.color){
+            navigate('/admin/cars/'+$params.id);
             return;
         }
-        const edited = await editCarModel({id: $params.id,
-            make, model, bodyType, numberOfSeats, power, transmission, image:newImage});
+        const edited = await editCar({id: $params.id, mileage, year, color});
         if(edited){
-            navigate('/admin/car-models/'+$params.id);
+            navigate('/admin/cars/'+$params.id);
         }
     }
 </script>
@@ -69,44 +60,30 @@
         <div class="float-left w-80">
             <h3 class="text-3xl mb-5 mt-1 font-bold text-gray-900">Edit car model</h3>
             <label>
-                <span>Make: </span>
-                <input type="text" bind:value={make} required/>
+                <span>Year: </span>
+                <input type="number" bind:value={year} required/>
             </label>
             <label>
-                <span>Model: </span>
-                <input type="text" bind:value={model} required/>
+                <span>Mileage: </span>
+                <input type="number" bind:value={mileage} required/>
             </label>
             <label>
-                <span>Body type: </span>
-                <input type="text" bind:value={bodyType} required/>
-            </label>
-            <label>
-                <span>Number of seats: </span>
-                <input type="number" bind:value={numberOfSeats} required/>
-            </label>
-            <label>
-                <span>Power: </span>
-                <input type="number" bind:value={power} required/>
-            </label>
-            <label>
-                <span>Transmission: </span>
-                <input type="text" bind:value={transmission} required/>
+                <span>Color: </span>
+                <input type="text" bind:value={color} required/>
             </label>
         </div>
         <div class="ml-6 flex-1 flex-shrink-0" style="min-width: 16rem">
             <div class="block h-80 mb-8 flex justify-end items-center">
                 {#await fetchImage()}
-                    <img src={placeholderImage} alt="{make + ' ' + model}"
+                    <img src={placeholderImage} alt=" "
                          class="h-60 rounded-lg mb-2 float-right"/>
                 {:then image}
                     <div class="h-60 w-full max-w-sm mb-2 relative flex justify-center items-center float-right">
-                        <img src={newImageSrc ?? image ?? placeholderImage} alt="{make + ' ' + model}" class="rounded-lg"/>
-                        <InputImage bind:image={newImage} title=""/>
+                        <img src={image ?? placeholderImage} alt=" " class="rounded-lg"/>
                     </div>
                 {:catch error}
                     <div class="h-60 w-full max-w-sm mb-2 relative flex justify-center items-center float-right">
-                        <img src={newImageSrc ?? placeholderImage} alt="{make + ' ' + model}" class="rounded-lg"/>
-                        <InputImage bind:image={newImage} title=""/>
+                        <img src={placeholderImage} alt=" " class="rounded-lg"/>
                     </div>
                 {/await}
             </div>
@@ -114,7 +91,7 @@
                 <button class="button mx-2 float-right" on:click|preventDefault={() => {submit()}}>
                     Save <span class="material-icons top-0.5 relative float-right ml-3">check</span>
                 </button>
-                <button class="button mx-2 float-right ml-4" on:click|preventDefault={() => navigate('/admin/car-models/'+$params.id)}>
+                <button class="button mx-2 float-right ml-4" on:click|preventDefault={() => navigate('/admin/cars/'+$params.id)}>
                     Cancel <span class="material-icons top-0.5 relative float-right ml-3">close</span>
                 </button>
             </div>

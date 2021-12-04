@@ -6,6 +6,10 @@
     import CarModelsAdd from '../components/admin/carModels/CarModelsAdd.svelte';
     import CarModelInfo from '../components/admin/carModels/CarModelInfo.svelte';
     import CarModelsEdit from '../components/admin/carModels/CarModelsEdit.svelte';
+    import CarsList from '../components/admin/cars/CarsList.svelte';
+    import CarInfo from '../components/admin/cars/CarInfo.svelte';
+    import CarsAdd from '../components/admin/cars/CarsAdd.svelte';
+    import CarsEdit from '../components/admin/cars/CarsEdit.svelte';
 </script>
 
 <Route path="car-models/*">
@@ -27,6 +31,25 @@
         </Route>
     </AdminPanel>
 </Route>
+<Route path="cars/*">
+    <AdminPanel scrollable={false}>
+        <CarsList/>
+        <Route path="/">
+            <div class="h-24 pt-24 flex-1 rounded-xl pb-0 max-w-3xl text-3xl font-bold text-gray-400 text-center " style="min-width: 20rem">
+                Select car to view
+            </div>
+        </Route>
+        <Route path="add">
+            <CarsAdd/>
+        </Route>
+        <Route path="edit/:id">
+            <CarsEdit/>
+        </Route>
+        <Route path=":id" let:params>
+            <CarInfo/>
+        </Route>
+    </AdminPanel>
+</Route>
 <Route path="users/*">
     <AdminPanel scrollable={false}>
         <UsersList/>
@@ -41,5 +64,6 @@
     <AdminPanel>
         <UsersList/>
         <CarModelsList/>
+        <CarsList/>
     </AdminPanel>
 </Route>

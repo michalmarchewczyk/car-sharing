@@ -13,6 +13,7 @@ CREATE TABLE `cars` (
   `model_id` int NOT NULL,
   `year` int NOT NULL,
   `mileage` int NOT NULL,
+  `color` varchar(20) NOT NULL,
   `availability` enum('AVAILABLE','WAITING','RESERVED') NOT NULL DEFAULT 'AVAILABLE'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
