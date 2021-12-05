@@ -22,6 +22,7 @@ export const fetchCars = async () => {
             mileage: car['mileage'],
             color: car['color'],
             availability: car['availability'],
+            price: car['price'],
         }));
         cars.set(data);
     } else {
@@ -49,12 +50,13 @@ export const deleteCar = async ({id}) => {
 }
 
 
-export const addCar = async ({modelId, year, mileage, color}) => {
+export const addCar = async ({modelId, year, mileage, color, price}) => {
     const formData = new FormData();
     formData.append('model_id', modelId);
     formData.append('year', year);
     formData.append('mileage', mileage);
     formData.append('color', color);
+    formData.append('price', price);
     const res = await fetch('/api/cars/add_car.php', {
         method: 'POST',
         body: formData
@@ -68,7 +70,7 @@ export const addCar = async ({modelId, year, mileage, color}) => {
             return [{
                 ...carModel,
                 id: text,
-                modelId, year, mileage, color, availability: 'AVAILABLE',
+                modelId, year, mileage, color, availability: 'AVAILABLE', price
             }, ...cars];
         })
         return true;
@@ -79,12 +81,13 @@ export const addCar = async ({modelId, year, mileage, color}) => {
 }
 
 
-export const editCar = async ({id, mileage, year, color}) => {
+export const editCar = async ({id, mileage, year, color, price}) => {
     const formData = new FormData();
     formData.append('id', id);
     formData.append('mileage', mileage);
     formData.append('year', year);
     formData.append('color', color);
+    formData.append('price', price);
     const res = await fetch('/api/cars/edit_car.php', {
         method: 'POST',
         body: formData
@@ -95,7 +98,7 @@ export const editCar = async ({id, mileage, year, color}) => {
         cars.update(cars => {
             return cars.map(car => {
                 if(car.id === id){
-                    return {...car, mileage, year, color};
+                    return {...car, mileage, year, color, price};
                 }else{
                     return car;
                 }

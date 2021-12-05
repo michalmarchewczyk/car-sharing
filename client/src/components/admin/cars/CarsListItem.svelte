@@ -14,14 +14,17 @@
         <span class="cars-list-item-name overflow-ellipsis overflow-hidden">
             {car.make} {car.model}
         </span>
+        <span class="cars-list-item-id overflow-ellipsis overflow-hidden font-bold">
+            {car.price} PLN / h</span>
         <span class="cars-list-item-id overflow-ellipsis overflow-hidden">
             {car.bodyType}, {car.numberOfSeats} seats, {car.power} hp, {car.transmission}</span>
         <span class="cars-list-item-id overflow-ellipsis overflow-hidden">
             {car.color}, {car.mileage} km, {car.year} yr</span>
+
     </div>
     <div class="w-32 ml-4">
         <span class="pt-0 text-gray-800 text-right font-bold">{car.availability}</span>
-        <span class="pt-2 text-gray-400 text-right">[id={car.id}]</span>
+        <span class="pt-7 text-gray-400 text-right">[id={car.id}]</span>
         <span class="pt-0 text-gray-400 text-right">[model_id={car.modelId}]</span>
     </div>
 </div>

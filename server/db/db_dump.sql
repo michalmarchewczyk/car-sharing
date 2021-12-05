@@ -17,7 +17,8 @@ CREATE TABLE `cars` (
   `year` int NOT NULL,
   `mileage` int NOT NULL,
   `color` varchar(20) NOT NULL,
-  `availability` enum('AVAILABLE','WAITING','RESERVED') NOT NULL DEFAULT 'AVAILABLE'
+  `availability` enum('AVAILABLE','WAITING','RESERVED') NOT NULL DEFAULT 'AVAILABLE',
+  `price` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `car_models`;
@@ -84,7 +85,7 @@ CREATE TABLE `users` (
   `id` int NOT NULL,
   `first_name` varchar(30) NOT NULL,
   `last_name` varchar(60) NOT NULL,
-  `type` enum('ADMIN','MODERATOR','CUSTOMER','BANNED') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'CUSTOMER',
+  `type` enum('ADMIN','MODERATOR','CUSTOMER','BANNED','WAITING') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'WAITING',
   `email` varchar(120) NOT NULL,
   `password` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

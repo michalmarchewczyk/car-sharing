@@ -9,9 +9,10 @@
     let year = '';
     let mileage = '';
     let color = '';
+    let price = 0;
 
     const submit = async () => {
-        const added = await addCar({modelId, year, mileage, color});
+        const added = await addCar({modelId, year, mileage, color, price});
         if(added){
             navigate('/admin/cars');
         }
@@ -55,6 +56,10 @@
             <label>
                 <span>Color: </span>
                 <input type="text" bind:value={color} required/>
+            </label>
+            <label>
+                <span>Price: </span>
+                <input type="number" bind:value={price} required/>
             </label>
         </div>
         <div class="ml-12 flex-1 flex-shrink-0" style="min-width: 16rem">

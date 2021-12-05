@@ -44,19 +44,20 @@
             <span>Year: <span class="font-bold">{car.year}</span></span>
             <span>Mileage: <span class="font-bold">{car.mileage}</span></span>
             <span>Color: <span class="font-bold">{car.color}</span></span>
+            <span>Price: <span class="font-bold">{car.price} PLN / h</span></span>
         </div>
         <div class="ml-6 flex-1 flex-shrink-0" style="min-width: 16rem">
             <span class="text-right font-bold pb-2">{car.availability}</span>
             {#await fetchImage()}
                 <img src={placeholderImage} alt="{car.make + ' ' + car.model}"
-                     class="h-60 rounded-lg mb-12 float-right"/>
+                     class="h-60 rounded-lg mb-24 float-right"/>
             {:then image}
-                <div class="h-60 w-full max-w-sm mb-8 mt-4 relative flex justify-center items-center float-right">
+                <div class="h-60 w-full max-w-sm mb-20 mt-4 relative flex justify-center items-center float-right">
                     <img src={image} alt="{car.make + ' ' + car.model}" class="rounded-lg"/>
                 </div>
             {:catch error}
                 <img src={placeholderImage} alt="{car.make + ' ' + car.model}"
-                     class="h-60 rounded-lg mb-12 float-right"/>
+                     class="h-60 rounded-lg mb-24 float-right"/>
             {/await}
             <div class="block float-right">
                 <button class="button mx-2 float-right" on:click={() => delCar()}>

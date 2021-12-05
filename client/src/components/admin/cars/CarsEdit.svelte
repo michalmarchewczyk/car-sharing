@@ -17,6 +17,7 @@
     let mileage = '';
     let year = '';
     let color = '';
+    let price = 0;
 
     $: {
         if(!initialized && car.id) {
@@ -24,6 +25,7 @@
             mileage = car.mileage;
             year = car.year;
             color = car.color;
+            price = car.price;
         }
     }
 
@@ -39,11 +41,11 @@
 
 
     const submit = async () => {
-        if(mileage === car.mileage && year === car.year && color === car.color){
+        if(mileage === car.mileage && year === car.year && color === car.color && price === car.price){
             navigate('/admin/cars/'+$params.id);
             return;
         }
-        const edited = await editCar({id: $params.id, mileage, year, color});
+        const edited = await editCar({id: $params.id, mileage, year, color, price});
         if(edited){
             navigate('/admin/cars/'+$params.id);
         }
@@ -70,6 +72,10 @@
             <label>
                 <span>Color: </span>
                 <input type="text" bind:value={color} required/>
+            </label>
+            <label>
+                <span>Price: </span>
+                <input type="number" bind:value={price} required/>
             </label>
         </div>
         <div class="ml-6 flex-1 flex-shrink-0" style="min-width: 16rem">

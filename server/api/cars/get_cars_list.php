@@ -5,7 +5,7 @@ $db = get_db();
 
 require '../users/guard_is_moderator.php';
 
-$stmt = $db->prepare("SELECT cars.id, car_models.id as model_id, year, mileage, color, availability, make, model, body_type, number_of_seats, power, transmission FROM cars
+$stmt = $db->prepare("SELECT cars.id, car_models.id as model_id, year, mileage, color, availability, price, make, model, body_type, number_of_seats, power, transmission FROM cars
     LEFT JOIN car_models on car_models.id = cars.model_id");
 
 if (!$stmt) {
