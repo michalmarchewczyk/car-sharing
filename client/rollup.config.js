@@ -6,6 +6,8 @@ import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
 import sveltePreprocess from 'svelte-preprocess';
 import image from '@rollup/plugin-image';
+import url from '@rollup/plugin-url';
+import path from 'path';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -34,6 +36,11 @@ export default {
 		css({ output: 'bundle.css' }),
 
 		image(),
+
+		url({
+			include: ['**/*.pdf', '**/*.worker.js'],
+			destDir: path.join(__dirname, '../server/build'),
+		}),
 
 		resolve({
 			browser: true,

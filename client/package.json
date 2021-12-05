@@ -10,7 +10,9 @@
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-image": "^2.1.1",
     "@rollup/plugin-node-resolve": "^11.0.0",
+    "@rollup/plugin-url": "^6.1.0",
     "autoprefixer": "^10.4.0",
+    "pdfjs-dist": "^2.10.377",
     "postcss": "^8.4.1",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
@@ -22,5 +24,6 @@
     "svelte-navigator": "^3.1.5",
     "svelte-preprocess": "^4.9.8",
     "tailwindcss": "^2.2.19"
-  }
+  },
+  "dependencies": {}
 }
