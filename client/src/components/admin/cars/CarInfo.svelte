@@ -44,7 +44,7 @@
             <span>Year: <span class="font-bold">{car.year}</span></span>
             <span>Mileage: <span class="font-bold">{car.mileage}</span></span>
             <span>Color: <span class="font-bold">{car.color}</span></span>
-            <span>Price: <span class="font-bold">{car.price} PLN / h</span></span>
+            <span>Price: <span class="font-bold">{car.price} PLN / day</span></span>
         </div>
         <div class="ml-6 flex-1 flex-shrink-0" style="min-width: 16rem">
             <span class="text-right font-bold pb-2">{car.availability}</span>

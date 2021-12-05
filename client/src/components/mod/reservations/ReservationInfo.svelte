@@ -9,6 +9,8 @@
 
     let dateDifference = '';
 
+    let price = 0;
+
     $: {
         const dif = new Date(reservation.endTime) - new Date(reservation.startTime)
         const date = new Date(dif);
@@ -26,6 +28,7 @@
             str += date.getDay() !== 1 ? 's ' : ' ';
         }
         dateDifference = str;
+        price = reservation.car?.price * dif / (1000*60*60*24);
     }
 
     $: fetchImage = async () => {
@@ -57,6 +60,7 @@
             <span>Start date: <span class="font-bold">{new Date(reservation.startTime).toLocaleDateString('en-GB')}</span></span>
             <span>End date: <span class="font-bold">{new Date(reservation.endTime).toLocaleDateString('en-GB')}</span></span>
             <span>Duration: <span class="font-bold">{dateDifference}</span></span>
+            <span>Price: <span class="font-bold">{price} PLN</span></span>
             <span class="font-bold pt-2">Status:</span>
             <select bind:value={reservation.status} on:change={changeStatus} on:click|stopPropagation>
                 <option value="WAITING" disabled>WAITING</option>
@@ -75,6 +79,7 @@
             <h3 class="text-2xl mb-3 mt-1 font-bold text-gray-900 whitespace-nowrap overflow-ellipsis overflow-hidden h-8 text-right">
                 {reservation.car?.make} {reservation.car?.model}
             </h3>
+            <span class="text-right font-bold pb-2">{reservation.car?.price} PLN / day</span>
             <span class="text-right font-bold">{reservation.car?.color}</span>
             <span class="text-right font-bold">{reservation.car?.bodyType}, {reservation.car?.numberOfSeats} seats</span>
             <span class="text-right font-bold">{reservation.car?.power} hp, {reservation.car?.transmission}</span>

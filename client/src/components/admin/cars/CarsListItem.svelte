@@ -15,7 +15,7 @@
             {car.make} {car.model}
         </span>
         <span class="cars-list-item-id overflow-ellipsis overflow-hidden font-bold">
-            {car.price} PLN / h</span>
+            {car.price} PLN / day</span>
         <span class="cars-list-item-id overflow-ellipsis overflow-hidden">
             {car.bodyType}, {car.numberOfSeats} seats, {car.power} hp, {car.transmission}</span>
         <span class="cars-list-item-id overflow-ellipsis overflow-hidden">
