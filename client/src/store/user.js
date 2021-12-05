@@ -18,6 +18,6 @@ export const updateUserData = async () => {
         firstName: data['first_name'],
         lastName: data['last_name'],
         type: data['type'],
-        email: data['emai'],
+        email: data['email'],
     });
 }

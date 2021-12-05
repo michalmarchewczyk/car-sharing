@@ -1,6 +1,7 @@
 import {get, writable} from 'svelte/store';
 import {createNotification} from './notifications';
 import {carModels} from './carModels';
+import {resetFilters} from './carFilters';
 
 export const cars = writable([]);
 
@@ -26,6 +27,7 @@ export const fetchCars = async () => {
             count: car['count'],
         }));
         cars.set(data);
+        await resetFilters();
     } else {
         throw new Error(await res.text());
     }

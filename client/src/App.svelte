@@ -19,6 +19,7 @@ import UsersList from './components/admin/users/UsersList.svelte';
 import CarModelsListItem from './components/admin/carModels/CarModelsListItem.svelte';
 import AdminRoute from './routes/AdminRoute.svelte';
 import ModRoute from './routes/ModRoute.svelte';
+import PanelRoute from './routes/PanelRoute.svelte';
 
 onMount(() => {
 	updateUserData();
@@ -38,9 +39,7 @@ onMount(() => {
 			<Route path="logout"><Logout/></Route>
 			<Route path="about"><About/></Route>
 			<Route path="panel/*">
-				<Route path="/">
-					<Panel />
-				</Route>
+				<PanelRoute/>
 			</Route>
 			<Route path="mod/*">
 				<ModRoute/>
