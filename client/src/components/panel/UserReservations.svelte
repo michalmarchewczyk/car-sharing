@@ -1,12 +1,14 @@
 <script>
 import {useLocation} from 'svelte-navigator';
+import {userReservations} from '../../store/userReservations';
+import UserReservationsItem from './UserReservationsItem.svelte';
 
 const location = useLocation();
 
 </script>
 
-<div class="flex-1 flex flex-col">
-    <h2 class="text-left m-2 text-xl font-bold text-gray-700 px-2 mt-4 h-5">
+<div class="flex-1 flex flex-col max-w-sm max-h-full">
+    <h2 class="text-left m-2 text-xl font-bold text-gray-700 px-2 mt-4 h-5 mb-4">
         My reservations
         {#if $location.pathname === '/panel'}
             <a href='/panel/reservations' class="button-inline">
@@ -14,11 +16,9 @@ const location = useLocation();
             </a>
         {/if}
     </h2>
-    <div class="mb-4 rounded-lg mt-4 flex flex-col w-full flex-wrap gap-4 flex-1">
-        {#each [1, 2, 3] as reservation}
-            <div class="bg-white shadow-lg p-4 rounded-lg w-full overflow-hidden">
-                {JSON.stringify(reservation)}
-            </div>
+    <div class="pb-4 rounded-lg mt-4 flex flex-col w-full gap-4 flex-1 overflow-y-auto px-2">
+        {#each $location.pathname === '/panel' ? $userReservations.slice(0,6) : $userReservations as reservation}
+            <UserReservationsItem reservation={reservation}/>
         {/each}
     </div>
 </div>

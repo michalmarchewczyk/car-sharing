@@ -3,10 +3,12 @@ include('../headers.php');
 include('../db/db.php');
 $db = get_db();
 
-require '../users/guard_is_moderator.php';
+$user_id = require('../users/get_user_id.php');
 
-$stmt = $db->prepare("SELECT reservations.id, user_id, car_id, start_time, end_time, status, first_name, last_name
-    FROM reservations LEFT JOIN users on users.id = reservations.user_id");
+$stmt = $db->prepare("SELECT reservations.id, user_id, car_id, start_time, end_time, status
+    FROM reservations WHERE user_id=:user_id");
+
+$stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 
 if (!$stmt) {
     http_response_code(500);

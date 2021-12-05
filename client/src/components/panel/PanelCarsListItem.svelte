@@ -1,5 +1,6 @@
 <script>
     import placeholderImage from '../../assets/images/car_placeholder.png';
+    import {navigate} from 'svelte-navigator';
 
     export let car = {};
 
@@ -41,7 +42,8 @@
                  - {car.count} {car.count === '1' ? 'person' : 'people'} waiting
             {/if}
         </span>
-        <button class="button-inline" disabled={car.availability === 'RESERVED'}>
+        <button class="button-inline" disabled={car.availability === 'RESERVED'}
+                on:click|preventDefault={() => {navigate('/panel/make-reservation/'+car.id)}}>
             Reserve <span class="material-icons top-0 relative float-right ml-1 text-white">arrow_forward</span>
         </button>
     </div>

@@ -37,6 +37,8 @@ $: {
             <a href='/panel/cars' class="button-inline">
                 View all <span class="material-icons top-0 relative float-right ml-1">arrow_forward</span>
             </a>
+        {:else}
+            ({carsFiltered.length})
         {/if}
     </h2>
     <div class="mb-4 rounded-lg mt-4 flex flex-row w-full flex-wrap gap-6 mb-12">

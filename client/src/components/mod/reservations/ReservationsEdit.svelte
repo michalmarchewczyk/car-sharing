@@ -26,20 +26,10 @@
 
     $: {
         const dif = new Date(endTime) - new Date(startTime);
-        const date = new Date(dif);
+        const diffDays = Math.ceil(dif / (1000 * 60 * 60 * 24));
         let str = '';
-        if(date.getFullYear() > 1970){
-            str += (date.getFullYear()-1970) + ' year';
-            str += date.getFullYear() !== 1970 ? 's ' : ' ';
-        }
-        if(date.getMonth() > 0){
-            str += date.getMonth() + ' month';
-            str += date.getMonth() !== 1 ? 's ' : ' ';
-        }
-        if(date.getDay() > 0){
-            str += date.getDate() + ' day';
-            str += date.getDay() !== 1 ? 's ' : ' ';
-        }
+        str += diffDays + ' day';
+        str += diffDays !== 1 ? 's ' : ' ';
         dateDifference = str;
         price = reservation.car?.price * dif / (1000*60*60*24);
     }

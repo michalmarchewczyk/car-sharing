@@ -3,15 +3,17 @@
     import {navigate} from 'svelte-navigator';
     import {onMount} from 'svelte';
     import {fetchCars} from '../store/cars';
-    import {fetchReservations} from '../store/reservations';
+    import {fetchUserReservations} from '../store/userReservations';
 
     $: if($loggedIn === false){
         navigate('/login');
     }
 
+    export let scrollable = true;
 
     onMount(async () => {
         await fetchCars();
+        await fetchUserReservations();
     });
 </script>
 
@@ -21,9 +23,15 @@
     </title>
 </svelte:head>
 {#if $loggedIn}
-    <div class="px-12 w-full flex flex-col h-full overflow-y-scroll">
+    <div class="px-12 w-full flex flex-col h-full"
+         class:overflow-y-scroll={scrollable}
+         class:pb-8={scrollable}
+    >
         <h1>Panel</h1>
-        <div class="flex flex-row flex-wrap gap-12 flex-1 justify-center">
+        <div class="flex flex-row flex-wrap gap-12 flex-1 justify-center"
+             class:overflow-visible={scrollable}
+             class:overflow-hidden={!scrollable}
+        >
             <slot></slot>
         </div>
     </div>

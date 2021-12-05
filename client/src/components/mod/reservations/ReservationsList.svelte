@@ -1,11 +1,8 @@
 <script>
     import {useLocation} from 'svelte-navigator';
     import {onMount} from 'svelte';
-    import {cars, fetchCars} from '../../../store/cars';
     import {fetchReservations, reservations} from '../../../store/reservations';
-    import CarsListItem from '../../admin/cars/CarsListItem.svelte';
     import ReservationsListItem from './ReservationsListItem.svelte';
-    // import CarsListItem from './CarsListItem.svelte';
 
     const location = useLocation();
 
@@ -26,9 +23,6 @@
         {/if}
     </h2>
     <div class="overflow-y-auto flex-1 px-2 pb-2">
-<!--        <a href="/mod/cars/add" class="button w-full shadow">-->
-<!--            <span class="material-icons top-0.5 relative float-left mr-1">add</span> Add new car-->
-<!--        </a>-->
         {#each $location.pathname === '/mod' ? $reservations.slice(0,5) : $reservations as reservation}
             <ReservationsListItem reservation={reservation}/>
         {:else}
