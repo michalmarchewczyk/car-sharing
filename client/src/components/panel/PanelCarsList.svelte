@@ -17,6 +17,7 @@ let carsFiltered = [];
 
 $: {
     carsFiltered = $cars;
+    carsFiltered = carsFiltered.filter(car => car['availability'] !== 'RESERVED');
     ['make', 'model', 'bodyType', 'numberOfSeats', 'transmission', 'color', 'availability'].forEach(key => {
         if ($filter[key] !== '') {
             carsFiltered = carsFiltered.filter(car => car[key] === $filter[key]);
@@ -32,7 +33,7 @@ $: {
 
 <div class="h-auto">
     <h2 class="text-left m-2 text-xl font-bold text-gray-700 px-2">
-        Available cars
+        Cars
         {#if $location.pathname === '/panel'}
             <a href='/panel/cars' class="button-inline">
                 View all <span class="material-icons top-0 relative float-right ml-1">arrow_forward</span>

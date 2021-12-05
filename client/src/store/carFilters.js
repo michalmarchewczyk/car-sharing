@@ -53,6 +53,8 @@ export const resetFilters = async () => {
         });
     });
 
+    values['availability'] = values['availability'].filter(v => v !== 'RESERVED');
+
     filterValues.set(values);
 
     filter.set({
@@ -68,7 +70,7 @@ export const resetFilters = async () => {
         yearMax: values.yearMax,
         mileageMin: values.mileageMin,
         mileageMax: values.mileageMax,
-        availability: 'AVAILABLE',
+        availability: '',
         priceMin: values.priceMin,
         priceMax: values.priceMax,
     })
