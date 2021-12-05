@@ -95,14 +95,6 @@
                 <img src={placeholderImage} alt="{reservation.make + ' ' + reservation.model}"
                      class="h-40 rounded-lg mb-12 float-right"/>
             {/await}
-<!--            <div class="block float-right">-->
-<!--                <button class="button mx-2 float-right" on:click={() => {}}>-->
-<!--                    Delete <span class="material-icons top-0.5 relative float-right ml-3">delete</span>-->
-<!--                </button>-->
-<!--                <a href='/admin/reservations/edit/{$params.id}' class="button mx-2 float-right">-->
-<!--                    Edit <span class="material-icons top-0.5 relative float-right ml-3">edit</span>-->
-<!--                </a>-->
-<!--            </div>-->
         </div>
     </div>
 </div>

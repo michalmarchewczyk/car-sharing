@@ -23,6 +23,7 @@ export const fetchCars = async () => {
             color: car['color'],
             availability: car['availability'],
             price: car['price'],
+            count: car['count'],
         }));
         cars.set(data);
     } else {

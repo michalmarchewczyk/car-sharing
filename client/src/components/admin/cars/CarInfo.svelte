@@ -48,6 +48,7 @@
         </div>
         <div class="ml-6 flex-1 flex-shrink-0" style="min-width: 16rem">
             <span class="text-right font-bold pb-2">{car.availability}</span>
+            <span class="text-right font-bold pb-2">{car.count} {car.count === '1' ? 'person' : 'people'} waiting</span>
             {#await fetchImage()}
                 <img src={placeholderImage} alt="{car.make + ' ' + car.model}"
                      class="h-60 rounded-lg mb-24 float-right"/>
