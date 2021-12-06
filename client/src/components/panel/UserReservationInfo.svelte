@@ -1,7 +1,7 @@
 <script>
     import {navigate, useParams} from 'svelte-navigator';
     import placeholderImage from '../../assets/images/car_placeholder.png';
-    import {cancelReservation, userReservations} from '../../store/userReservations';
+    import {cancelReservation, endReservation, userReservations} from '../../store/userReservations';
 
     let params = useParams();
 
@@ -54,6 +54,13 @@
         await cancelReservation({id: $params.id});
     }
 
+    const end = async () => {
+        if(reservation.status !== 'ACTIVE'){
+            return;
+        }
+        await endReservation({id: $params.id});
+    }
+
 </script>
 
 
@@ -104,6 +111,11 @@
                 <h3 class="text-3xl mb-5 mt-1 font-bold text-gray-900 whitespace-nowrap overflow-ellipsis overflow-hidden h-10">
                     Active reservation
                 </h3>
+                <div class="mt-40">
+                    <button class="button mx-2 float-left ml-0" on:click={() => {end()}}>
+                        End <span class="material-icons top-0.5 relative float-right ml-3">check</span>
+                    </button>
+                </div>
             </div>
             <div class="reservations-info-car ml-6 flex-1 flex-shrink-0" style="min-width: 16rem">
                 <h3 class="text-2xl mb-1 mt-1 font-bold text-gray-900 whitespace-nowrap overflow-ellipsis overflow-hidden h-8 text-right mr-4">

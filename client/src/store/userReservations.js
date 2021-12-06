@@ -83,3 +83,30 @@ export const cancelReservation = async ({id}) => {
         return false;
     }
 }
+
+
+export const endReservation = async ({id}) => {
+    const formData = new FormData();
+    formData.append('id', id);
+    const res = await fetch('/api/reservations/end_reservation.php', {
+        method: 'POST',
+        body: formData
+    })
+    const text = await res.text();
+    if (res.status === 200) {
+        createNotification('Ended reservation #'+id, 'success');
+        userReservations.update(reservations => {
+            return reservations.map(reservation => {
+                if(reservation.id === id){
+                    return {...reservation, status: 'DONE'}
+                }else{
+                    return reservation;
+                }
+            })
+        });
+        return true;
+    }else{
+        createNotification('Error: '+text, 'error');
+        return false;
+    }
+}
