@@ -141,14 +141,21 @@ ALTER TABLE `reservations`
   ADD CONSTRAINT `user_id` FOREIGN KEY (`car_id`) REFERENCES `cars` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 DELIMITER $$
-DROP EVENT IF EXISTS `reset_timestamp`$$
-CREATE DEFINER=`devuser`@`%` EVENT `reset_timestamp` ON SCHEDULE EVERY 1 SECOND STARTS '2021-12-05 20:02:37' ON COMPLETION NOT PRESERVE DISABLE DO UPDATE configuration SET value=UNIX_TIMESTAMP() WHERE name='current_timestamp'$$
-
 DROP EVENT IF EXISTS `skip_backward`$$
 CREATE DEFINER=`devuser`@`%` EVENT `skip_backward` ON SCHEDULE EVERY 5 SECOND STARTS '2021-12-05 20:09:26' ON COMPLETION NOT PRESERVE DISABLE DO UPDATE configuration SET value=value-86400 WHERE name='current_timestamp'$$
 
 DROP EVENT IF EXISTS `skip_forward`$$
 CREATE DEFINER=`devuser`@`%` EVENT `skip_forward` ON SCHEDULE EVERY 5 SECOND STARTS '2021-12-05 20:08:42' ON COMPLETION NOT PRESERVE DISABLE DO UPDATE configuration SET value=value+86400 WHERE name='current_timestamp'$$
+
+DROP EVENT IF EXISTS `reset_timestamp`$$
+CREATE DEFINER=`devuser`@`%` EVENT `reset_timestamp` ON SCHEDULE EVERY 1 SECOND STARTS '2021-12-05 20:02:37' ON COMPLETION NOT PRESERVE DISABLE DO UPDATE configuration SET value=UNIX_TIMESTAMP() WHERE name='current_timestamp'$$
+
+DROP EVENT IF EXISTS `check_reservation_to_activate`$$
+CREATE DEFINER=`devuser`@`%` EVENT `check_reservation_to_activate` ON SCHEDULE EVERY 1 SECOND STARTS '2021-12-05 20:02:37' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+        DECLARE timestamp INT;
+        SET timestamp = (SELECT `value` FROM `configuration` WHERE `name`='current_timestamp');
+        UPDATE reservations SET `status`='ACTIVE' WHERE `status`='CONFIRMED' AND `start_time` <= FROM_UNIXTIME(timestamp);
+    END$$
 
 DELIMITER ;
 COMMIT;
