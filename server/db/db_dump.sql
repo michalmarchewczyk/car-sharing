@@ -39,7 +39,7 @@ CREATE TABLE `configuration` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `configuration` (`name`, `value`) VALUES
-('current_timestamp', 1642610375);
+('current_timestamp', 1643128775);
 
 DROP TABLE IF EXISTS `reservations`;
 CREATE TABLE `reservations` (
@@ -155,6 +155,13 @@ CREATE DEFINER=`devuser`@`%` EVENT `check_reservation_to_activate` ON SCHEDULE E
         DECLARE timestamp INT;
         SET timestamp = (SELECT `value` FROM `configuration` WHERE `name`='current_timestamp');
         UPDATE reservations SET `status`='ACTIVE' WHERE `status`='CONFIRMED' AND `start_time` <= FROM_UNIXTIME(timestamp);
+    END$$
+
+DROP EVENT IF EXISTS `check_reservation_to_ban_user`$$
+CREATE DEFINER=`devuser`@`%` EVENT `check_reservation_to_ban_user` ON SCHEDULE EVERY 10 SECOND STARTS '2021-12-05 20:02:37' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+        DECLARE timestamp INT;
+        SET timestamp = (SELECT `value` FROM `configuration` WHERE `name`='current_timestamp');
+        UPDATE `users` LEFT JOIN `reservations` on `reservations`.user_id=`users`.id SET `type`='BANNED' WHERE `users`.type!='ADMIN' AND `reservations`.status='ACTIVE' AND `reservations`.`end_time`<=FROM_UNIXTIME(timestamp+84000);
     END$$
 
 DELIMITER ;
