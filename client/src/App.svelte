@@ -20,9 +20,11 @@ import CarModelsListItem from './components/admin/carModels/CarModelsListItem.sv
 import AdminRoute from './routes/AdminRoute.svelte';
 import ModRoute from './routes/ModRoute.svelte';
 import PanelRoute from './routes/PanelRoute.svelte';
+import {initializeInterval} from './store/time';
 
 onMount(() => {
 	updateUserData();
+	initializeInterval();
 })
 
 </script>

@@ -1,6 +1,8 @@
 <script>
     import {loggedIn, user} from '../store/user';
+    import {currentTimestamp} from '../store/time';
 
+    $: date = new Date($currentTimestamp*1000).toLocaleString('pl-PL');
 </script>
 
 <nav class="shadow-lg w-full h-auto p-2 z-50 px-4 overflow-hidden">
@@ -16,11 +18,13 @@
                 <a href="/admin">Admin panel</a>
             {/if}
             <div class="float-right">
+                <span>{date}</span>
                 <a href="/">{$user.firstName + ' ' + $user.lastName}</a>
                 <a href="/logout">Logout</a>
             </div>
         {:else}
             <div class="float-right">
+                <span>{date}</span>
                 <a href="/login">Login</a>
                 <a href="/register">Register</a>
             </div>
@@ -33,6 +37,10 @@
   nav {
 	a {
 	  @apply inline-block mx-3 text-gray-600 hover:text-gray-900 font-bold mb-2 float-left text-lg mt-1.5;
+    }
+
+    span {
+	  @apply inline-block mx-3 text-gray-400 font-bold mb-2 float-left text-lg mt-1.5;
     }
 
 	.h1 {

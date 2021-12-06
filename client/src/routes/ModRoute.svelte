@@ -4,6 +4,7 @@
     import ReservationsList from '../components/mod/reservations/ReservationsList.svelte';
     import ReservationInfo from '../components/mod/reservations/ReservationInfo.svelte';
     import ReservationsEdit from '../components/mod/reservations/ReservationsEdit.svelte';
+    import TimeSettings from '../components/mod/time/TimeSettings.svelte';
 </script>
 
 <Route path="reservations/*">
@@ -24,9 +25,7 @@
 </Route>
 <Route path="/">
     <ModPanel>
-<!--        <UsersList/>-->
-<!--        <CarModelsList/>-->
-<!--        <CarsList/>-->
         <ReservationsList/>
+        <TimeSettings/>
     </ModPanel>
 </Route>
