@@ -32,6 +32,21 @@
         }
     }
 
+    $: fetchQR = async () => {
+        const formData = new FormData();
+        formData.append('id', $params.id);
+        const res = await fetch('/api/reservations/get_reservation_qr.php', {
+            method: 'POST',
+            body: formData
+        });
+        if(res.status === 200){
+            const data = await res.blob();
+            return URL.createObjectURL(data);
+        }else{
+            throw new Error(await res.text());
+        }
+    }
+
     const cancel = async () => {
         if(reservation.status !== 'WAITING' && reservation.status !== 'CONFIRMED'){
             return;
@@ -83,6 +98,29 @@
             {/await}
         </div>
     </div>
+    {#if reservation.status==='ACTIVE'}
+        <div class="bg-white rounded-lg shadow-lg mx-2 my-3 mb-4 p-4 px-5 flex flex-row justify-between flex-wrap">
+            <div class="float-left overflow-hidden overflow-ellipsis max-w-sm">
+                <h3 class="text-3xl mb-5 mt-1 font-bold text-gray-900 whitespace-nowrap overflow-ellipsis overflow-hidden h-10">
+                    Active reservation
+                </h3>
+            </div>
+            <div class="reservations-info-car ml-6 flex-1 flex-shrink-0" style="min-width: 16rem">
+                <h3 class="text-2xl mb-1 mt-1 font-bold text-gray-900 whitespace-nowrap overflow-ellipsis overflow-hidden h-8 text-right mr-4">
+                    QR Code
+                </h3>
+                {#await fetchQR()}
+                {:then image}
+                    <div class="h-52 w-52 mb-1 mt-2 relative float-right overflow-hidden bg-black">
+                        <img src={image} alt="{reservation.make + ' ' + reservation.model}" class="w-full h-full"
+                        style="image-rendering: pixelated;"
+                        />
+                    </div>
+                {/await}
+            </div>
+        </div>
+    {/if}
+
 </div>
 
 
