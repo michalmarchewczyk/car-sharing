@@ -11,9 +11,8 @@
     let initialized = false;
 
     $: {
-        if(!initialized && $timeEvents.length === 3){
+        if(!initialized && $timeEvents.length > 1){
             initialized = true;
-            console.log($timeEvents);
             realTime = $timeEvents.find(e => e.Name === 'reset_timestamp').Status === 'ENABLED';
             skipForward = $timeEvents.find(e => e.Name === 'skip_forward').Status === 'ENABLED';
             skipBackward = $timeEvents.find(e => e.Name === 'skip_backward').Status === 'ENABLED';
