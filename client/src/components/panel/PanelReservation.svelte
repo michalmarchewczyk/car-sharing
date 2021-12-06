@@ -5,6 +5,7 @@
     import {user} from '../../store/user';
     import {createNotification} from '../../store/notifications';
     import {addReservation} from '../../store/userReservations';
+    import {currentTimestamp} from '../../store/time';
 
     let params = useParams();
 
@@ -12,8 +13,8 @@
 
     let dateDifference = '';
 
-    let startTime = new Date().toISOString().substr(0,10);
-    let endTime = new Date(Date.now() + 86400000).toISOString().substr(0,10);
+    let startTime = new Date($currentTimestamp*1000).toISOString().substr(0,10);
+    let endTime = new Date($currentTimestamp*1000 + 86400000).toISOString().substr(0,10);
 
     let accepted = false;
 
@@ -67,14 +68,14 @@
             <label class="pt-8">
                 <span>Start date: </span>
                 <input type="date" bind:value={startTime} required
-                       min={new Date(Date.now()).toISOString().substr(0,10)}
-                       max={new Date(Date.now()+86400*1000*360).toISOString().substr(0,10)}/>
+                       min={new Date($currentTimestamp*1000).toISOString().substr(0,10)}
+                       max={new Date($currentTimestamp*1000+86400*1000*360).toISOString().substr(0,10)}/>
             </label>
             <label class="pb-6">
                 <span>End date: </span>
                 <input type="date" bind:value={endTime} required
                        min={new Date((new Date(startTime)).getTime()+86400*1000*1).toISOString().substr(0,10)}
-                       max={new Date(Date.now()+86400*1000*361).toISOString().substr(0,10)}/>
+                       max={new Date($currentTimestamp*1000+86400*1000*361).toISOString().substr(0,10)}/>
             </label>
             <span>Duration: <span class="font-bold">{dateDifference}</span></span>
             <span>Price: <span class="font-bold">{price} PLN</span></span>

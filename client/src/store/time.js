@@ -1,5 +1,6 @@
-import {writable} from 'svelte/store';
+import {get, writable} from 'svelte/store';
 import {createNotification} from './notifications';
+import {loggedIn} from './user';
 
 
 export const currentTimestamp = writable(new Date().getTime()/1000);
@@ -7,14 +8,18 @@ export const timeEvents = writable([]);
 
 let interval = null;
 
-export const initializeInterval = () => {
+export const initializeInterval = async () => {
     if(interval) return;
+    await fetchCurrentTimestamp();
     interval = setInterval(async () => {
         await fetchCurrentTimestamp();
     }, 1000);
 }
 
 const fetchCurrentTimestamp = async () => {
+    if(!get(loggedIn)){
+        return;
+    }
     try {
         const res = await fetch('/api/time/get_current_time.php');
         const data = await res.json();
