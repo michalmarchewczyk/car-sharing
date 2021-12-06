@@ -32,6 +32,15 @@ CREATE TABLE `car_models` (
   `transmission` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+DROP TABLE IF EXISTS `configuration`;
+CREATE TABLE `configuration` (
+  `name` varchar(20) NOT NULL,
+  `value` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO `configuration` (`name`, `value`) VALUES
+('current_timestamp', 1642610375);
+
 DROP TABLE IF EXISTS `reservations`;
 CREATE TABLE `reservations` (
   `id` int NOT NULL,
@@ -98,6 +107,9 @@ ALTER TABLE `cars`
 ALTER TABLE `car_models`
   ADD PRIMARY KEY (`id`);
 
+ALTER TABLE `configuration`
+  ADD PRIMARY KEY (`name`);
+
 ALTER TABLE `reservations`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`car_id`),
@@ -127,6 +139,18 @@ ALTER TABLE `cars`
 ALTER TABLE `reservations`
   ADD CONSTRAINT `car_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `user_id` FOREIGN KEY (`car_id`) REFERENCES `cars` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+DELIMITER $$
+DROP EVENT IF EXISTS `reset_timestamp`$$
+CREATE DEFINER=`devuser`@`%` EVENT `reset_timestamp` ON SCHEDULE EVERY 1 SECOND STARTS '2021-12-05 20:02:37' ON COMPLETION NOT PRESERVE DISABLE DO UPDATE configuration SET value=UNIX_TIMESTAMP() WHERE name='current_timestamp'$$
+
+DROP EVENT IF EXISTS `skip_backward`$$
+CREATE DEFINER=`devuser`@`%` EVENT `skip_backward` ON SCHEDULE EVERY 5 SECOND STARTS '2021-12-05 20:09:26' ON COMPLETION NOT PRESERVE DISABLE DO UPDATE configuration SET value=value-86400 WHERE name='current_timestamp'$$
+
+DROP EVENT IF EXISTS `skip_forward`$$
+CREATE DEFINER=`devuser`@`%` EVENT `skip_forward` ON SCHEDULE EVERY 5 SECOND STARTS '2021-12-05 20:08:42' ON COMPLETION NOT PRESERVE DISABLE DO UPDATE configuration SET value=value+86400 WHERE name='current_timestamp'$$
+
+DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
