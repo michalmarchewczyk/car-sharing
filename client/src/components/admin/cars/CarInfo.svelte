@@ -5,7 +5,7 @@
 
     let params = useParams();
 
-    $: car = $cars.find(car => car.id === $params.id) ?? {};
+    $: car = $cars.find(car => car.id === parseInt($params.id)) ?? {};
 
     $: fetchImage = async () => {
         if(!car.modelId) return;

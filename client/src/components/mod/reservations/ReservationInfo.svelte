@@ -5,7 +5,7 @@
 
     let params = useParams();
 
-    $: reservation = $reservations.find(reservation => reservation.id === $params.id) ?? {};
+    $: reservation = $reservations.find(reservation => reservation.id === parseInt($params.id)) ?? {};
 
     let dateDifference = '';
 

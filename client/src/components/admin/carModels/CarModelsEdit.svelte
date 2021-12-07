@@ -7,7 +7,7 @@
 
     let params = useParams();
 
-    $: carModel = $carModels.find(carModel => carModel.id === $params.id) ?? {};
+    $: carModel = $carModels.find(carModel => carModel.id === parseInt($params.id)) ?? {};
 
     let initialized = false;
 
