@@ -19,12 +19,11 @@
             {/if}
             <div class="float-right">
                 <span>{date}</span>
-                <a href="/">{$user.firstName + ' ' + $user.lastName}</a>
+                <a href="/panel">{$user.firstName + ' ' + $user.lastName}</a>
                 <a href="/logout">Logout</a>
             </div>
         {:else}
             <div class="float-right">
-                <span>{date}</span>
                 <a href="/login">Login</a>
                 <a href="/register">Register</a>
             </div>
