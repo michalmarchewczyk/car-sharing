@@ -13,3 +13,5 @@ RUN apt install -y libpng-dev
 RUN docker-php-ext-install gd
 
 COPY . /var/www/html
+
+RUN chmod -R 777 /var/www/html/data
