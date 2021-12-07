@@ -19,7 +19,7 @@
     }
 
     const delCar= async () => {
-        const deleted = await deleteCar({id: $params.id});
+        const deleted = await deleteCar({id: parseInt($params.id)});
         if(deleted){
             navigate('/admin/cars');
         }

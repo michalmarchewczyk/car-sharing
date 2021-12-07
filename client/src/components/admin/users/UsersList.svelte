@@ -11,7 +11,7 @@
             let data = await res.json();
             data = data.reverse();
             return data.map(u => ({
-                id: u['id'],
+                id: parseInt(u['id']),
                 firstName: u['first_name'],
                 lastName: u['last_name'],
                 type: u['type'],

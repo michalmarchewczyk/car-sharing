@@ -55,7 +55,7 @@
             navigate('/mod/reservations/'+$params.id);
             return;
         }
-        const edited = await editReservation({id: $params.id, startTime: new Date(startTime), endTime: new Date(endTime)});
+        const edited = await editReservation({id: parseInt($params.id), startTime: new Date(startTime), endTime: new Date(endTime)});
         if(edited){
             navigate('/mod/reservations/'+$params.id);
         }

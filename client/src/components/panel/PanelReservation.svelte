@@ -50,7 +50,7 @@
             createNotification('Accept Terms of Service', 'error');
             return;
         }
-        let added = await addReservation({carId: $params.id, startTime: new Date(startTime), endTime: new Date(endTime)});
+        let added = await addReservation({carId: parseInt($params.id), startTime: new Date(startTime), endTime: new Date(endTime)});
         if(added){
             navigate('/panel');
         }

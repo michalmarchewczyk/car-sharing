@@ -12,7 +12,7 @@
     let price = 0;
 
     const submit = async () => {
-        const added = await addCar({modelId, year, mileage, color, price});
+        const added = await addCar({modelId: parseInt(modelId), year, mileage, color, price});
         if(added){
             navigate('/admin/cars');
         }

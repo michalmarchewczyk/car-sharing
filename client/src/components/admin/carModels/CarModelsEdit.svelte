@@ -51,7 +51,7 @@
             navigate('/admin/car-models/'+$params.id);
             return;
         }
-        const edited = await editCarModel({id: $params.id,
+        const edited = await editCarModel({id: parseInt($params.id),
             make, model, bodyType, numberOfSeats, power, transmission, image:newImage});
         if(edited){
             navigate('/admin/car-models/'+$params.id);

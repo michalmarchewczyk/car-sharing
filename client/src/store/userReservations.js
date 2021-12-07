@@ -13,13 +13,13 @@ export const fetchUserReservations = async () => {
         let data = await res.json();
         data = data.reverse();
         data = data.map(reservation => ({
-            id: reservation['id'],
-            carId: reservation['car_id'],
-            userId: reservation['user_id'],
+            id: parseInt(reservation['id']),
+            carId: parseInt(reservation['car_id']),
+            userId: parseInt(reservation['user_id']),
             startTime: reservation['start_time'],
             endTime: reservation['end_time'],
             status: reservation['status'],
-            car: get(cars).find(car => car.id === reservation['car_id']),
+            car: get(cars).find(car => car.id === parseInt(reservation['car_id'])),
         }));
         userReservations.set(data);
     } else {
@@ -41,7 +41,7 @@ export const addReservation = async ({ carId, startTime, endTime}) => {
         createNotification('Made reservation #'+text, 'success');
         userReservations.update(reservations => {
             return [{
-                    id: text,
+                    id: parseInt(text),
                     carId: carId,
                     userId: get(user).id,
                     startTime: startTime,

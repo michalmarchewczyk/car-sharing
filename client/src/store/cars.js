@@ -11,8 +11,8 @@ export const fetchCars = async () => {
         let data = await res.json();
         data = data.reverse();
         data = data.map(car => ({
-            id: car['id'],
-            modelId: car['model_id'],
+            id: parseInt(car['id']),
+            modelId: parseInt(car['model_id']),
             make: car['make'],
             model: car['model'],
             bodyType: car['body_type'],
@@ -72,7 +72,7 @@ export const addCar = async ({modelId, year, mileage, color, price}) => {
         cars.update(cars => {
             return [{
                 ...carModel,
-                id: text,
+                id: parseInt(text),
                 modelId, year, mileage, color, availability: 'AVAILABLE', price
             }, ...cars];
         })

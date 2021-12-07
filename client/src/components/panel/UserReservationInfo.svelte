@@ -51,14 +51,14 @@
         if(reservation.status !== 'WAITING' && reservation.status !== 'CONFIRMED'){
             return;
         }
-        await cancelReservation({id: $params.id});
+        await cancelReservation({id: parseInt($params.id)});
     }
 
     const end = async () => {
         if(reservation.status !== 'ACTIVE'){
             return;
         }
-        await endReservation({id: $params.id});
+        await endReservation({id: parseInt($params.id)});
     }
 
 </script>

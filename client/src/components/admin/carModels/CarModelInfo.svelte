@@ -18,7 +18,7 @@
     }
 
     const deleteCar = async () => {
-        const deleted = await deleteCarModel({id: $params.id});
+        const deleted = await deleteCarModel({id: parseInt($params.id)});
         if(deleted){
             navigate('/admin/car-models');
         }
@@ -61,7 +61,7 @@
                     Edit <span class="material-icons top-0.5 relative float-right ml-3">edit</span>
                 </a>
                 <button class="button mx-2 float-right" on:click={() => {
-                    navigate('/admin/cars/add', {state: {modelId: $params.id}})
+                    navigate('/admin/cars/add', {state: {modelId: parseInt($params.id)}})
                 }}>
                     Add car<span class="material-icons top-0.5 relative float-right ml-3">add</span>
                 </button>

@@ -14,7 +14,7 @@ export const updateUserData = async () => {
     const data = await res.json();
     loggedIn.set(true);
     user.set({
-        id: data['id'],
+        id: parseInt(data['id']),
         firstName: data['first_name'],
         lastName: data['last_name'],
         type: data['type'],

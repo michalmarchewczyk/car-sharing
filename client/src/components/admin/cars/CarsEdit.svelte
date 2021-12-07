@@ -45,7 +45,7 @@
             navigate('/admin/cars/'+$params.id);
             return;
         }
-        const edited = await editCar({id: $params.id, mileage, year, color, price});
+        const edited = await editCar({id: parseInt($params.id), mileage, year, color, price});
         if(edited){
             navigate('/admin/cars/'+$params.id);
         }
