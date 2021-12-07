@@ -3,7 +3,7 @@ include('../headers.php');
 include('../db/db.php');
 $db = get_db();
 
-require 'guard_is_admin.php';
+require 'guard_is_moderator.php';
 
 $stmt = $db->prepare("SELECT id, first_name, last_name, type, email FROM users");
 
