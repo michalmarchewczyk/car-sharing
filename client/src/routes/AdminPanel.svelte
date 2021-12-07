@@ -4,6 +4,7 @@
     import {onMount} from 'svelte';
     import {fetchCars} from '../store/cars';
     import {fetchCarModels} from '../store/carModels';
+    import {fetchUsers} from '../store/users';
 
     $: if($loggedIn === false){
         navigate('/login');
@@ -17,6 +18,7 @@
 
     onMount(async () => {
         await fetchCars();
+        await fetchUsers();
         await fetchCarModels();
     });
 </script>

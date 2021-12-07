@@ -1,5 +1,6 @@
 <script>
     import {createNotification} from '../../../store/notifications';
+    import {changeUserType} from '../../../store/users';
 
     export let user = {};
 
@@ -7,19 +8,7 @@
     $: disabled = isAdmin;
 
     const changeType = async () => {
-        const formData = new FormData();
-        formData.append('type', user.type);
-        formData.append('user_id', user.id);
-        const res = await fetch('/api/users/change_user_type.php', {
-            method: 'POST',
-            body: formData
-        });
-        console.log(res);
-        if(res.status === 200){
-            createNotification(`Changed user[id=${user.id}] type to ${user.type}`, 'success')
-        }else{
-            createNotification(`Error: ${await res.text()}`, 'error')
-        }
+        await changeUserType({userId: user.id, type: user.type});
 
     }
 </script>

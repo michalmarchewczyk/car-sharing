@@ -1,26 +1,10 @@
 <script>
-    import Alert from '../../Alert.svelte';
     import UsersListItem from './UsersListItem.svelte';
     import {useLocation} from 'svelte-navigator';
+    import {users} from '../../../store/users';
 
     const location = useLocation();
 
-    const fetchUsers = async () => {
-        const res = await fetch('/api/users/get_users_list.php');
-        if(res.status === 200){
-            let data = await res.json();
-            data = data.reverse();
-            return data.map(u => ({
-                id: parseInt(u['id']),
-                firstName: u['first_name'],
-                lastName: u['last_name'],
-                type: u['type'],
-                email: u['email'],
-            }));
-        }else{
-            throw new Error(await res.text());
-        }
-    }
 </script>
 
 
@@ -33,17 +17,13 @@
             </a>
         {/if}
     </h2>
-    {#await fetchUsers()}
-        <p class="text-center text-lg font-bold text-gray-400 my-8">Loading...</p>
-    {:then users}
-        <div class="overflow-y-auto flex-1 px-2 pb-2">
-            {#each ($location.pathname === '/admin' ? users.slice(0,6) : users) as user}
-                <UsersListItem user={user}/>
-            {/each}
-        </div>
-    {:catch error}
-        <Alert type="error">{error}</Alert>
-    {/await}
+    <div class="overflow-y-auto flex-1 px-2 pb-2">
+        {#each ($location.pathname === '/admin' ? $users.slice(0,6) : $users) as user}
+            <UsersListItem user={user}/>
+        {:else}
+            <p class="text-center text-lg font-bold text-gray-400 my-8">Loading...</p>
+        {/each}
+    </div>
 </div>
 
 
