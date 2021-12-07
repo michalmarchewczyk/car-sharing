@@ -73,7 +73,7 @@ export const addCar = async ({modelId, year, mileage, color, price}) => {
             return [{
                 ...carModel,
                 id: parseInt(text),
-                modelId, year, mileage, color, availability: 'AVAILABLE', price
+                modelId, year, mileage, color, availability: 'AVAILABLE', price, count: 0
             }, ...cars];
         })
         return true;
