@@ -14,6 +14,7 @@ onMount(() => {
 })
 
 let carsFiltered = [];
+let sort = '';
 
 $: {
     carsFiltered = $cars;
@@ -26,6 +27,17 @@ $: {
     ['power', 'year', 'mileage', 'price'].forEach(key => {
         carsFiltered = carsFiltered.filter(car => parseFloat(car[key]) >= $filter[key+'Min'] && parseFloat(car[key]) <= $filter[key+'Max'])
     })
+    if(sort){
+        if(sort === 'priceAsc'){
+            carsFiltered = carsFiltered.sort((a,b) => (a.price - b.price));
+        }else if(sort === 'priceDesc'){
+            carsFiltered = carsFiltered.sort((a,b) => (b.price - a.price));
+        }else if(sort === 'yearAsc'){
+            carsFiltered = carsFiltered.sort((a,b) => (a.year - b.year));
+        }else if(sort === 'yearDesc'){
+            carsFiltered = carsFiltered.sort((a,b) => (b.year - a.year));
+        }
+    }
 }
 
 
@@ -40,6 +52,16 @@ $: {
             </a>
         {:else}
             ({carsFiltered.length})
+            <label class="float-right mr-4">
+                <span>Sort by:</span>
+                <select bind:value={sort}>
+                    <option value=""> - </option>
+                    <option value="priceAsc">Price (asc)</option>
+                    <option value="priceDesc">Price (desc)</option>
+                    <option value="yearAsc">Year (asc)</option>
+                    <option value="yearDesc">Year (desc)</option>
+                </select>
+            </label>
         {/if}
     </h2>
     <div class="mb-4 rounded-lg mt-4 flex flex-row w-full flex-wrap gap-6 mb-12">
@@ -53,5 +75,9 @@ $: {
 <style lang="scss">
   .button-inline {
 	@apply inline-block relative mx-3 bg-blue-700 text-white p-1.5 px-2 rounded-md hover:bg-blue-800 cursor-pointer text-base font-bold;
+  }
+  select{
+	@apply top-0 bg-white w-32 border-2 border-gray-600 focus:border-blue-600 h-10 rounded-md text-base my-2 disabled:opacity-50 px-1 float-right mr-6 ml-4;
+    margin-top: -0.25rem;
   }
 </style>
