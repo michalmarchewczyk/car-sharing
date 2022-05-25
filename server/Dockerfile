@@ -14,4 +14,6 @@ RUN docker-php-ext-install gd
 
 COPY . /var/www/html
 
+RUN MKDIR /var/www/html/data
+
 RUN chmod -R 777 /var/www/html/data
