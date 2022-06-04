@@ -3,7 +3,7 @@ version: '3'
 
 services:
   db:
-    build: ./db
+    build: ./server/db
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
       MYSQL_DATABASE: db
@@ -16,7 +16,7 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
   apache:
-    build: ../
+    build: .
     depends_on:
       - db
     environment:
@@ -37,7 +37,7 @@ services:
     links:
       - db:db
     ports:
-      - 8000:80
+      - "8000:80"
     environment:
       MYSQL_USER: "${MYSQL_USER}"
       MYSQL_PASSWORD: "${MYSQL_PASSWORD}"

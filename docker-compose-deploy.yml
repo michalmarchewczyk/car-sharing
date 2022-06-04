@@ -3,7 +3,7 @@ version: '3'
 
 services:
   db:
-    build: ./db
+    build: ./server/db
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
@@ -18,7 +18,7 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
   apache:
-    build: ../
+    build: .
     depends_on:
       - db
     restart: always
@@ -38,7 +38,7 @@ services:
     links:
       - db:db
     ports:
-      - 8000:80
+      - "8000:80"
     restart: always
     environment:
       MYSQL_USER: "${MYSQL_USER}"

@@ -1,7 +1,7 @@
 FROM node:18 AS client
 
-COPY . /var/www/html
-WORKDIR /var/www/html/client
+COPY . /app
+WORKDIR /app/client
 RUN npm install
 RUN npm run build
 
@@ -15,6 +15,6 @@ RUN apt update -y
 RUN apt install -y libpng-dev
 RUN docker-php-ext-install gd
 
-COPY --from=client /var/www/html/server /var/www/html
+COPY --from=client /app/server /var/www/html
 RUN mkdir /var/www/html/data
 RUN chmod -R 777 /var/www/html/data
